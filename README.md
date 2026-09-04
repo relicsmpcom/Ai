@@ -189,6 +189,21 @@ GET  /health          what is loaded, including the decision thresholds
 GET  /                the web UI
 ```
 
+## Hosting
+
+The engine imports nothing outside the Python standard library, so it runs in a
+browser through Pyodide with no backend at all:
+
+```bash
+python scripts/build_pages.py --out site   # a static site, ~160 KB of engine
+```
+
+Push it to GitHub Pages and the whole product runs on the reader's own
+machine — free to host, and nobody's essay is uploaded anywhere. The
+`pages.yml` workflow does that on every push, gated on the tests *and* the
+detector's false-positive rate. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
+for the trade-offs and for running the real API instead.
+
 ## Layout
 
 ```

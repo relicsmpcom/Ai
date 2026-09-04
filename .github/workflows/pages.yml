@@ -1,0 +1,64 @@
+name: Deploy the serverless build to GitHub Pages
+
+on:
+  push:
+    branches: [main, claude/smiley-face-qo3zsg]
+  workflow_dispatch:
+
+# Pages needs these; the job itself writes nothing to the repository.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; never cancel a run that is already publishing.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      # The browser build ships wia/detector/weights.json as-is, so a broken
+      # model must not reach the public page.
+      - name: Guard the numbers that matter
+        run: |
+          pytest -q
+          python - <<'PY'
+          from wia.bench import run_cross_validation
+          m = run_cross_validation(folds=5)
+          assert m["metrics"]["false_positive_rate"] <= 0.02, m["metrics"]["false_positive_rate"]
+          assert m["hard_negatives"]["accused_as_ai"] == 0
+          print("FPR", m["metrics"]["false_positive_rate"], "AUC", round(m["metrics"]["roc_auc_ai"], 3))
+          PY
+
+      # The engine must stay standard-library-only, or the browser build breaks
+      # in a way no test would otherwise catch.
+      - name: Check the engine has no third-party imports
+        run: python scripts/check_browser_safe.py
+
+      - name: Build the static site
+        run: python scripts/build_pages.py --out site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

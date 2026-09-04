@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WIA — Writing Intelligence Assistant</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%232f6f5e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2717%27 font-family=%27sans-serif%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3EW%3C/text%3E%3C/svg%3E">
 <style>
   :root{
     --bg:#faf9f7; --panel:#ffffff; --ink:#1b1a18; --muted:#6b6660; --line:#e5e1db;
@@ -88,6 +89,11 @@
   code{font-family:var(--mono);font-size:12.5px;background:var(--bg);padding:1px 5px;border-radius:4px}
   details summary{cursor:pointer;font-size:13px;color:var(--muted);margin-top:8px}
   .err{color:var(--danger);font-size:13px}
+  #boot{margin:12px 0 0;padding:10px 13px;border-radius:8px;font-size:13px;
+    background:var(--accent-soft);color:var(--accent);border:1px solid transparent}
+  #boot.error{background:var(--warn-soft);color:var(--warn)}
+  #boot progress{width:180px;height:6px;vertical-align:-1px;margin-left:8px}
+  body.booting main{opacity:.45;pointer-events:none}
 </style>
 </head>
 <body>
@@ -95,6 +101,7 @@
   <h1>WIA <span>· writing intelligence for Dutch and English</span></h1>
   <p class="lede">Estimates how a text was likely produced, and rewrites it to read more naturally
      without changing what it says. Estimates are probabilistic — never proof.</p>
+  <div id="boot" hidden></div>
 </header>
 
 <nav role="tablist">
@@ -215,12 +222,17 @@
 
 <script>
 const $ = (s) => document.querySelector(s);
-const api = async (path, body) => {
+// Transport is pluggable so one page serves two very different deployments:
+// against `wia serve` it is an HTTP call; on a static host, boot.js replaces
+// it with a call into Python running in this browser tab. Nothing else in the
+// UI knows or cares which one it got.
+window.wiaTransport = window.wiaTransport || (async (path, body) => {
   const r = await fetch(path, {method:"POST", headers:{"Content-Type":"application/json"},
                               body: JSON.stringify(body)});
   if (!r.ok) throw new Error((await r.json().catch(()=>({detail:r.statusText}))).detail || "request failed");
   return r.json();
-};
+});
+const api = (path, body) => window.wiaTransport(path, body);
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const pct = (x) => Math.round(x*100) + "%";
 
@@ -251,10 +263,10 @@ $("#h-form").oninput = () => $("#h-form-v").textContent =
   ["","very casual","conversational","neutral","professional","formal","academic"][$("#h-form").value];
 $("#h-var").oninput = () => $("#h-var-v").textContent = $("#h-var").value + "%";
 $("#h-form").oninput(); $("#h-var").oninput();
-fetch("/modes").then(r=>r.json()).then(d => {
+api("/modes", {}).then(d => {
   $("#h-mode").innerHTML = '<option value="">— no preset —</option>' +
     Object.keys(d.modes).map(m => `<option value="${m}">${m.replace(/_/g," ")}</option>`).join("");
-});
+}).catch(() => {});
 
 // ---- detect ----
 const SAMPLE = "In today's fast-paced digital landscape, organizations must leverage innovative solutions to optimize their workflows. Furthermore, it is important to note that a comprehensive framework plays a crucial role in driving sustainable growth. Additionally, businesses can streamline operations, enhance productivity, and empower stakeholders across the entire ecosystem. Moreover, this approach enables teams to align on shared objectives and unlock new opportunities.\n\nWe tried three tools before this one and two of them broke on day one. The third lasted a week. What finally worked was boring: we wrote the steps down, gave each one an owner, and stopped adding new tickets on Fridays. Throughput went up about 20% in a month. Not magic. Just fewer things half-done at once.";
