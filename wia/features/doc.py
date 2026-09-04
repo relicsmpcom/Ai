@@ -96,9 +96,22 @@ class Doc:
         """Occurrences per ``per`` words — the standard normalisation here."""
         return count / max(1, self.n_words) * per
 
+    @cached_property
+    def phrase_haystack(self) -> str:
+        """Lower-cased text with punctuation turned into spaces.
+
+        Matching " furthermore " against the raw text misses every
+        "Furthermore," in the corpus — which is most of them. Normalising the
+        haystack once is the difference between a feature that measures
+        connective density and one that measures how often a writer forgot the
+        comma.
+        """
+        flattened = re.sub(r"[^\w'’\s-]+", " ", self.lowered)
+        return " " + re.sub(r"\s+", " ", flattened) + " "
+
     def phrase_count(self, phrases) -> int:
-        hay = " " + re.sub(r"\s+", " ", self.lowered) + " "
-        return sum(hay.count(" " + p + " ") if " " not in p else hay.count(p) for p in phrases)
+        hay = self.phrase_haystack
+        return sum(hay.count(f" {p} ") for p in phrases)
 
     @cached_property
     def compression_ratio(self) -> float:

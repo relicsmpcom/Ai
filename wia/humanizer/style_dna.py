@@ -187,7 +187,7 @@ def _frequent_transitions(doc: Doc, lang: str, limit: int = 5) -> List[str]:
     from wia.features.lexicons import CASUAL_CONNECTIVES, FORMAL_CONNECTIVES
 
     pool = lex_get(FORMAL_CONNECTIVES, lang) | lex_get(CASUAL_CONNECTIVES, lang)
-    hay = " " + doc.lowered + " "
+    hay = doc.phrase_haystack
     counts = {p: hay.count(f" {p} ") for p in pool}
     return [p for p, n in sorted(counts.items(), key=lambda kv: -kv[1])[:limit] if n]
 

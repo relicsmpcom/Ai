@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WIA — Writing Intelligence Assistant</title>
+<style>
+  :root{
+    --bg:#faf9f7; --panel:#ffffff; --ink:#1b1a18; --muted:#6b6660; --line:#e5e1db;
+    --accent:#2f6f5e; --accent-soft:#e8f1ee; --warn:#a8621b; --warn-soft:#fbf0e4;
+    --danger:#a33a34; --human:#2f6f5e; --mixed:#a8801b; --ai:#a33a34;
+    --radius:10px; --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#16151a; --panel:#1e1d23; --ink:#eceaf2; --muted:#a29daa; --line:#312f39;
+      --accent:#6fbfa5; --accent-soft:#1f3b34; --warn:#e0a15f; --warn-soft:#3a2c1b;
+      --danger:#e08983; --human:#6fbfa5; --mixed:#d7ae4e; --ai:#e08983;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{padding:22px 24px 0;max-width:1120px;margin:0 auto}
+  h1{font-size:19px;margin:0;letter-spacing:-.01em}
+  h1 span{color:var(--muted);font-weight:400}
+  .lede{color:var(--muted);margin:6px 0 0;max-width:64ch;font-size:13.5px}
+  nav{display:flex;gap:2px;flex-wrap:wrap;max-width:1120px;margin:18px auto 0;padding:0 24px;
+    border-bottom:1px solid var(--line)}
+  nav button{background:none;border:0;padding:9px 13px;font:inherit;font-size:13.5px;
+    color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+  main{max-width:1120px;margin:0 auto;padding:20px 24px 60px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .grid{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:900px){.grid.two{grid-template-columns:1fr 1fr}}
+  textarea{width:100%;min-height:200px;padding:12px;border:1px solid var(--line);
+    border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;resize:vertical}
+  textarea:focus,select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .controls{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:12px 0}
+  label{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--muted);margin-bottom:3px}
+  select,input[type=text],input[type=number]{width:100%;padding:7px 8px;border:1px solid var(--line);
+    border-radius:6px;background:var(--panel);color:var(--ink);font:inherit;font-size:13.5px}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  button.go{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:10px 18px;
+    font:inherit;font-weight:600;cursor:pointer}
+  button.go:disabled{opacity:.5;cursor:progress}
+  button.ghost{background:none;border:1px solid var(--line);border-radius:8px;padding:7px 12px;
+    font:inherit;font-size:13px;color:var(--ink);cursor:pointer}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .muted{color:var(--muted)}
+  .small{font-size:12.5px}
+  .bars{margin:14px 0}
+  .bar{display:grid;grid-template-columns:130px 1fr 52px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+  .track{display:block;height:9px;background:var(--line);border-radius:5px;overflow:hidden}
+  .fill{display:block;height:100%;border-radius:5px;transition:width .25s ease}
+  .fill.human{background:var(--human)} .fill.mixed{background:var(--mixed)} .fill.ai{background:var(--ai)}
+  .verdict{font-size:22px;font-weight:650;letter-spacing:-.01em;margin:2px 0 2px}
+  .chip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:600;
+    background:var(--accent-soft);color:var(--accent);vertical-align:2px;margin-left:8px}
+  .notice{background:var(--warn-soft);border-left:3px solid var(--warn);padding:9px 12px;
+    border-radius:0 6px 6px 0;font-size:13px;margin:8px 0}
+  ul.plain{margin:8px 0;padding-left:18px}
+  ul.plain li{margin:4px 0;font-size:13.5px}
+  .heat{line-height:1.85;font-size:14.5px;white-space:pre-wrap;word-wrap:break-word}
+  .heat mark{background:transparent;border-radius:3px;padding:1px 0;
+    box-shadow:inset 0 -0.55em 0 var(--hl)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:10px}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .cand{border:1px solid var(--line);border-radius:8px;padding:13px;margin:10px 0;background:var(--bg)}
+  .cand.best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .cand h4{margin:0 0 4px;font-size:14px}
+  .cand .text{white-space:pre-wrap;margin:9px 0;font-size:14.5px}
+  .scores{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+  .scores b{color:var(--ink);font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:10px 0}
+  .stat div{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .stat b{display:block;font-size:19px;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .stat span{font-size:11.5px;color:var(--muted)}
+  .spark{display:flex;align-items:flex-end;gap:2px;height:38px;margin-top:6px}
+  .spark i{flex:1;background:var(--accent);opacity:.65;border-radius:1px;min-height:2px}
+  footer{max-width:1120px;margin:0 auto;padding:0 24px 40px;color:var(--muted);font-size:12px}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--bg);padding:1px 5px;border-radius:4px}
+  details summary{cursor:pointer;font-size:13px;color:var(--muted);margin-top:8px}
+  .err{color:var(--danger);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>WIA <span>· writing intelligence for Dutch and English</span></h1>
+  <p class="lede">Estimates how a text was likely produced, and rewrites it to read more naturally
+     without changing what it says. Estimates are probabilistic — never proof.</p>
+</header>
+
+<nav role="tablist">
+  <button role="tab" data-tab="detect" aria-selected="true">Detect</button>
+  <button role="tab" data-tab="humanize" aria-selected="false">Humanize</button>
+  <button role="tab" data-tab="analyze" aria-selected="false">Analyze</button>
+  <button role="tab" data-tab="compare" aria-selected="false">Compare</button>
+  <button role="tab" data-tab="style" aria-selected="false">My style</button>
+</nav>
+
+<main>
+  <!-- DETECT -->
+  <section id="tab-detect">
+    <div class="grid two">
+      <div class="panel">
+        <label for="d-text">Text</label>
+        <textarea id="d-text" placeholder="Paste at least 120 words for a usable estimate…"></textarea>
+        <div class="controls">
+          <div><label for="d-lang">Language</label>
+            <select id="d-lang"><option value="auto">Detect automatically</option>
+              <option value="nl">Nederlands</option><option value="en">English</option></select></div>
+        </div>
+        <div class="row">
+          <button class="go" id="d-go">Analyse</button>
+          <button class="ghost" id="d-sample">Load an example</button>
+          <span class="muted small" id="d-count">0 words</span>
+        </div>
+      </div>
+      <div class="panel" id="d-out"><p class="muted small">Results appear here.</p></div>
+    </div>
+    <div class="panel" id="d-heat" style="margin-top:16px;display:none"></div>
+  </section>
+
+  <!-- HUMANIZE -->
+  <section id="tab-humanize" hidden>
+    <div class="grid two">
+      <div class="panel">
+        <label for="h-text">Text</label>
+        <textarea id="h-text" placeholder="Paste the text you want to improve…"></textarea>
+        <div class="controls">
+          <div><label for="h-mode">Mode</label><select id="h-mode"></select></div>
+          <div><label for="h-lang">Language</label>
+            <select id="h-lang"><option value="auto">Auto</option><option value="nl">Nederlands</option>
+              <option value="en">English</option></select></div>
+          <div><label for="h-locale">Locale</label>
+            <select id="h-locale"><option value="">Default</option><option value="nl-NL">nl-NL</option>
+              <option value="nl-BE">nl-BE</option><option value="en-GB">en-GB</option>
+              <option value="en-US">en-US</option><option value="en-INT">en-INT</option></select></div>
+          <div><label for="h-tone">Tone</label><select id="h-tone"></select></div>
+          <div><label for="h-form">Formality <span id="h-form-v" class="muted"></span></label>
+            <input type="range" id="h-form" min="1" max="6" value="3"></div>
+          <div><label for="h-var">Sentence variation <span id="h-var-v" class="muted"></span></label>
+            <input type="range" id="h-var" min="0" max="100" value="60"></div>
+          <div><label for="h-conc">Length</label><select id="h-conc"></select></div>
+          <div><label for="h-dir">Directness</label><select id="h-dir"></select></div>
+          <div><label for="h-aud">Audience</label><select id="h-aud"></select></div>
+          <div><label for="h-purp">Purpose</label><select id="h-purp"></select></div>
+          <div><label for="h-contr">Contractions</label><select id="h-contr"></select></div>
+          <div><label for="h-keep">Keep exactly (comma separated)</label>
+            <input type="text" id="h-keep" placeholder="RelicSMP, 18%"></div>
+        </div>
+        <div class="row">
+          <button class="go" id="h-go">Rewrite</button>
+          <label class="row small" style="text-transform:none;letter-spacing:0;margin:0">
+            <input type="checkbox" id="h-style" style="width:auto"> use my style profile</label>
+          <span class="muted small" id="h-count">0 words</span>
+        </div>
+      </div>
+      <div class="panel" id="h-out"><p class="muted small">Candidates appear here.</p></div>
+    </div>
+  </section>
+
+  <!-- ANALYZE -->
+  <section id="tab-analyze" hidden>
+    <div class="grid two">
+      <div class="panel">
+        <label for="a-text">Text</label>
+        <textarea id="a-text"></textarea>
+        <div class="row"><button class="go" id="a-go">Analyse</button>
+          <span class="muted small" id="a-count">0 words</span></div>
+      </div>
+      <div class="panel" id="a-out"><p class="muted small">Analysis appears here.</p></div>
+    </div>
+  </section>
+
+  <!-- COMPARE -->
+  <section id="tab-compare" hidden>
+    <div class="grid two">
+      <div class="panel"><label for="c-left">Original</label><textarea id="c-left"></textarea></div>
+      <div class="panel"><label for="c-right">Rewrite</label><textarea id="c-right"></textarea></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="go" id="c-go">Compare</button></div>
+    <div class="panel" id="c-out" style="margin-top:16px"><p class="muted small">
+      Comparison appears here — including whether the rewrite still says the same thing.</p></div>
+  </section>
+
+  <!-- STYLE -->
+  <section id="tab-style" hidden>
+    <div class="grid two">
+      <div class="panel">
+        <label for="s-text">Your own writing — paste a few pieces, separated by a blank line</label>
+        <textarea id="s-text" style="min-height:260px"></textarea>
+        <div class="row"><button class="go" id="s-go">Build my profile</button>
+          <span class="muted small" id="s-count">0 words</span></div>
+        <p class="muted small">Samples stay in this browser session and in the running server's
+          memory. Nothing is written to disk.</p>
+      </div>
+      <div class="panel" id="s-out"><p class="muted small">Your profile appears here.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Authorship estimates are probabilistic and can be wrong. They are not proof that a person did or
+  did not write a text, and must not be used alone to accuse anyone. Rewriting here targets
+  naturalness, clarity and your own voice — not detector evasion.
+</footer>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const api = async (path, body) => {
+  const r = await fetch(path, {method:"POST", headers:{"Content-Type":"application/json"},
+                              body: JSON.stringify(body)});
+  if (!r.ok) throw new Error((await r.json().catch(()=>({detail:r.statusText}))).detail || "request failed");
+  return r.json();
+};
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pct = (x) => Math.round(x*100) + "%";
+
+// tabs
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("nav button").forEach(o => o.setAttribute("aria-selected", o===b));
+  document.querySelectorAll("main section").forEach(s => s.hidden = s.id !== "tab-"+b.dataset.tab);
+});
+
+// word counters
+[["#d-text","#d-count"],["#h-text","#h-count"],["#a-text","#a-count"],["#s-text","#s-count"]]
+  .forEach(([t,c]) => { const el=$(t); el.addEventListener("input", () => {
+    const n = (el.value.trim().match(/\S+/g)||[]).length; $(c).textContent = n + " words"; }); });
+
+// option lists
+const OPTS = {
+  "#h-tone":["neutral","professional","casual","friendly","formal","academic","confident","warm",
+             "concise","persuasive","enthusiastic","serious","technical","humorous","empathetic"],
+  "#h-conc":["balanced","shorten","concise","detailed","expanded"],
+  "#h-dir":["balanced","very_direct","direct","diplomatic","soft"],
+  "#h-aud":["general","customer","colleague","manager","student","professor","executive","technical","teen","social"],
+  "#h-purp":["inform","explain","persuade","summarize","sell","request","apologize","complain","teach","entertain","report"],
+  "#h-contr":["normal","none","light","conversational"],
+};
+for (const [sel, values] of Object.entries(OPTS))
+  $(sel).innerHTML = values.map(v => `<option value="${v}">${v.replace(/_/g," ")}</option>`).join("");
+$("#h-form").oninput = () => $("#h-form-v").textContent =
+  ["","very casual","conversational","neutral","professional","formal","academic"][$("#h-form").value];
+$("#h-var").oninput = () => $("#h-var-v").textContent = $("#h-var").value + "%";
+$("#h-form").oninput(); $("#h-var").oninput();
+fetch("/modes").then(r=>r.json()).then(d => {
+  $("#h-mode").innerHTML = '<option value="">— no preset —</option>' +
+    Object.keys(d.modes).map(m => `<option value="${m}">${m.replace(/_/g," ")}</option>`).join("");
+});
+
+// ---- detect ----
+const SAMPLE = "In today's fast-paced digital landscape, organizations must leverage innovative solutions to optimize their workflows. Furthermore, it is important to note that a comprehensive framework plays a crucial role in driving sustainable growth. Additionally, businesses can streamline operations, enhance productivity, and empower stakeholders across the entire ecosystem. Moreover, this approach enables teams to align on shared objectives and unlock new opportunities.\n\nWe tried three tools before this one and two of them broke on day one. The third lasted a week. What finally worked was boring: we wrote the steps down, gave each one an owner, and stopped adding new tickets on Fridays. Throughput went up about 20% in a month. Not magic. Just fewer things half-done at once.";
+$("#d-sample").onclick = () => { $("#d-text").value = SAMPLE; $("#d-text").dispatchEvent(new Event("input")); };
+
+function heatColour(p){ // p = probability of AI
+  if (p >= 0.6) return "rgba(163,58,52,.30)";
+  if (p >= 0.45) return "rgba(168,128,27,.30)";
+  if (p >= 0.3) return "rgba(168,128,27,.16)";
+  return "rgba(47,111,94,.20)";
+}
+
+$("#d-go").onclick = async () => {
+  const text = $("#d-text").value.trim();
+  if (!text) return;
+  $("#d-go").disabled = true; $("#d-out").innerHTML = '<p class="muted small">Analysing…</p>';
+  try {
+    const r = await api("/detect", {text, language: $("#d-lang").value});
+    $("#d-out").innerHTML = `
+      <div class="verdict">${esc(r.label_text)}<span class="chip">${esc(r.confidence)} confidence</span></div>
+      <p class="muted small">${r.words} words · ${r.language.toUpperCase()} · domain: ${esc(r.domain||"general")}</p>
+      <div class="bars">
+        ${bar("Likely human", r.human_probability, "human")}
+        ${bar("Mixed / AI-assisted", r.mixed_probability, "mixed")}
+        ${bar("Likely AI", r.ai_probability, "ai")}
+      </div>
+      ${(r.warnings||[]).map(w => `<div class="notice">${esc(w)}</div>`).join("")}
+      <details open><summary>What moved this estimate</summary>
+        <ul class="plain">${(r.explanations||[]).map(e=>`<li>${esc(e)}</li>`).join("")}</ul></details>
+      <p class="muted small">${esc(r.disclaimer)}</p>`;
+    renderHeat(text, r);
+  } catch (e) { $("#d-out").innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  $("#d-go").disabled = false;
+};
+const bar = (label, v, cls) => `<div class="bar"><span>${label}</span>
+  <span class="track"><span class="fill ${cls}" style="width:${(v*100).toFixed(1)}%"></span></span>
+  <span class="num" style="text-align:right">${pct(v)}</span></div>`;
+
+function renderHeat(text, r){
+  const box = $("#d-heat");
+  if (!r.segments || !r.segments.length){ box.style.display="none"; return; }
+  const marks = r.segments.map(s => ({start:s.segment.start, end:s.segment.end, p:s.ai_probability,
+                                      label:s.label, rel:s.reliability}));
+  let html = "", cursor = 0;
+  marks.sort((a,b)=>a.start-b.start);
+  // Overlapping windows: paint the strongest opinion on each character run.
+  const scores = new Array(text.length).fill(null);
+  for (const m of marks) for (let i=m.start;i<m.end && i<text.length;i++)
+    scores[i] = scores[i]===null ? m.p : Math.max(scores[i], m.p);
+  let i = 0;
+  while (i < text.length){
+    let j = i; const s = scores[i];
+    while (j < text.length && scores[j] === s) j++;
+    const chunk = esc(text.slice(i, j));
+    html += s === null ? chunk
+      : `<mark style="--hl:${heatColour(s)}" title="AI-like ${pct(s)}">${chunk}</mark>`;
+    i = j;
+  }
+  const m = r.mixed_authorship || {};
+  box.style.display = "block";
+  box.innerHTML = `<h3 style="margin:0 0 4px;font-size:15px">Where the estimate varies</h3>
+    <p class="muted small">${esc(m.verdict||"")} · ${m.segment_count||0} overlapping windows ·
+      ${pct(m.ai_span_share||0)} of the text sits in AI-like spans.
+      Short spans carry little evidence — read the shading as a hint, not a verdict.</p>
+    <div class="heat">${html}</div>
+    <div class="legend">
+      <span><i style="background:rgba(47,111,94,.35)"></i>reads human</span>
+      <span><i style="background:rgba(168,128,27,.35)"></i>unclear</span>
+      <span><i style="background:rgba(163,58,52,.35)"></i>reads generated</span></div>`;
+}
+
+// ---- humanize ----
+$("#h-go").onclick = async () => {
+  const text = $("#h-text").value.trim(); if (!text) return;
+  $("#h-go").disabled = true; $("#h-out").innerHTML = '<p class="muted small">Rewriting…</p>';
+  const body = {text, language:$("#h-lang").value, locale:$("#h-locale").value, mode:$("#h-mode").value,
+    tone:$("#h-tone").value, formality:+$("#h-form").value, conciseness:$("#h-conc").value,
+    directness:$("#h-dir").value, audience:$("#h-aud").value, purpose:$("#h-purp").value,
+    contractions:$("#h-contr").value, sentence_variation:+$("#h-var").value/100,
+    preserve: $("#h-keep").value.split(",").map(s=>s.trim()).filter(Boolean)};
+  if ($("#h-style").checked && window.__profile) body.style_profile = window.__profile;
+  try {
+    const r = await api("/humanize", body);
+    $("#h-out").innerHTML =
+      (r.warnings||[]).map(w=>`<div class="notice">${esc(w)}</div>`).join("") +
+      r.candidates.map(c => {
+        const s = c.scores;
+        return `<div class="cand ${c.label===r.recommended?"best":""}">
+          <h4>${c.label} — ${esc(c.description)}${c.label===r.recommended?' <span class="chip">recommended</span>':""}</h4>
+          ${c.accepted ? "" : `<div class="notice">Rejected: ${esc(c.rejected_reason)} — showing your original.</div>`}
+          <div class="text">${esc(c.text)}</div>
+          <div class="scores">
+            <span>meaning <b>${s.meaning_preservation}</b></span>
+            <span>naturalness <b>${s.naturalness}</b></span>
+            <span>grammar <b>${s.grammar}</b></span>
+            <span>readability <b>${s.readability}</b></span>
+            <span>tone <b>${s.tone_match}</b></span>
+            <span>overall <b>${s.overall}</b></span>
+          </div>
+          <details><summary>${c.changes.length} change${c.changes.length===1?"":"s"} · ${c.operations.length} operations</summary>
+            <table><thead><tr><th>operation</th><th>from</th><th>to</th><th>why</th></tr></thead><tbody>
+            ${c.changes.slice(0,40).map(ch=>`<tr><td><code>${esc(ch.op)}</code></td>
+              <td>${esc(ch.before)}</td><td>${esc(ch.after)}</td><td class="muted">${esc(ch.reason)}</td></tr>`).join("")}
+            </tbody></table></details>
+          <div class="row" style="margin-top:8px">
+            <button class="ghost" onclick="navigator.clipboard.writeText(this.closest('.cand').querySelector('.text').textContent)">Copy</button>
+            <button class="ghost" onclick="sendToCompare(this)">Compare with original</button>
+          </div></div>`;
+      }).join("") +
+      `<details><summary>What the planner found and did</summary>
+        <ul class="plain">${(r.plan.findings||[]).map(f=>`<li>${esc(f)}</li>`).join("") || "<li>Nothing obviously wrong.</li>"}</ul>
+        <table><tbody>${Object.entries(r.plan.passes||{}).map(([k,v])=>
+          `<tr><td>${esc(k)}</td><td class="muted">${v.map(esc).join(", ")}</td></tr>`).join("")}</tbody></table>
+       </details>
+       <p class="muted small">${(r.notes||[]).map(esc).join(" ")}</p>`;
+  } catch (e) { $("#h-out").innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  $("#h-go").disabled = false;
+};
+window.sendToCompare = (btn) => {
+  $("#c-left").value = $("#h-text").value;
+  $("#c-right").value = btn.closest(".cand").querySelector(".text").textContent;
+  document.querySelector('nav button[data-tab="compare"]').click();
+  $("#c-go").click();
+};
+
+// ---- analyze ----
+$("#a-go").onclick = async () => {
+  const text = $("#a-text").value.trim(); if (!text) return;
+  $("#a-go").disabled = true; $("#a-out").innerHTML = '<p class="muted small">Analysing…</p>';
+  try {
+    const r = await api("/analyze", {text});
+    const spark = r.rhythm.lengths || [];
+    const mx = Math.max(1, ...spark);
+    $("#a-out").innerHTML = `
+      <div class="stat">
+        <div><b>${r.words}</b><span>words</span></div>
+        <div><b>${r.sentences}</b><span>sentences</span></div>
+        <div><b>${r.rhythm.mean}</b><span>avg sentence</span></div>
+        <div><b>${r.naturalness.score}</b><span>naturalness</span></div>
+        <div><b>${r.readability.score}</b><span>reading ease</span></div>
+        <div><b>${r.tone.formality.level}/6</b><span>${esc(r.tone.formality.label)}</span></div>
+      </div>
+      <p class="muted small">${esc(r.readability.label)} · about ${Math.max(1,Math.round(r.reading_seconds/60))} min to read</p>
+      <div class="spark">${spark.map(v=>`<i style="height:${Math.max(4,v/mx*100)}%" title="${v} words"></i>`).join("")}</div>
+      <p class="muted small">Sentence lengths in order — flat bars mean flat rhythm.</p>
+      <h3 style="font-size:14px;margin:16px 0 4px">What to look at</h3>
+      <ul class="plain">${r.issues.length ? r.issues.map(i =>
+        `<li><b>${esc(i.kind.replace(/_/g," "))}</b> — ${esc(i.message)}
+         ${i.examples.length?`<br><span class="muted small">${i.examples.map(esc).join(" · ")}</span>`:""}</li>`).join("")
+        : "<li>Nothing stands out.</li>"}</ul>
+      ${r.detection ? `<h3 style="font-size:14px;margin:16px 0 4px">Authorship estimate</h3>
+        <div class="bars">${bar("human", r.detection.human_probability,"human")}
+        ${bar("mixed", r.detection.mixed_probability,"mixed")}
+        ${bar("AI", r.detection.ai_probability,"ai")}</div>` : ""}
+      <details><summary>Style fingerprint of this text</summary>
+        <ul class="plain">${r.style.description.map(d=>`<li>${esc(d)}</li>`).join("")}</ul></details>`;
+  } catch (e) { $("#a-out").innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  $("#a-go").disabled = false;
+};
+
+// ---- compare ----
+$("#c-go").onclick = async () => {
+  const original = $("#c-left").value.trim(), rewrite = $("#c-right").value.trim();
+  if (!original || !rewrite) return;
+  $("#c-go").disabled = true;
+  try {
+    const r = await api("/compare", {original, rewrite});
+    const d = r.deltas, m = r.meaning;
+    const sign = (v) => (v>0?"+":"") + v;
+    $("#c-out").innerHTML = `
+      <div class="${m.passed ? "" : "notice"}">
+        <b>${m.passed ? "Meaning preserved" : "Meaning changed"}</b> — score ${Math.round(m.score*100)}%.
+        ${m.violations.length ? "<ul class='plain'>" + m.violations.map(v =>
+          `<li>${esc(v.detail)}${v.blocking?" <b>(blocking)</b>":""}</li>`).join("") + "</ul>" : ""}
+      </div>
+      <div class="stat">
+        <div><b>${sign(d.words)}</b><span>words</span></div>
+        <div><b>${sign(d.naturalness)}</b><span>naturalness</span></div>
+        <div><b>${sign(d.readability)}</b><span>reading ease</span></div>
+        <div><b>${sign(d.sentence_variation)}</b><span>rhythm variation</span></div>
+        <div><b>${sign(d.formality)}</b><span>formality steps</span></div>
+        ${d.ai_probability===null?"":`<div><b>${sign(d.ai_probability)}</b><span>AI probability</span></div>`}
+      </div>
+      <p class="muted small">The AI-probability delta is shown for information only. Nothing in this
+        product optimises for it, and moving it is not a goal.</p>`;
+  } catch (e) { $("#c-out").innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  $("#c-go").disabled = false;
+};
+
+// ---- style ----
+$("#s-go").onclick = async () => {
+  const samples = $("#s-text").value.split(/\n\s*\n/).map(s=>s.trim()).filter(Boolean);
+  if (!samples.length) return;
+  $("#s-go").disabled = true;
+  try {
+    const r = await api("/style-profile", {samples});
+    window.__profile = r.profile;
+    const p = r.profile;
+    $("#s-out").innerHTML = `
+      <div class="stat">
+        <div><b>${r.sample_words}</b><span>words given</span></div>
+        <div><b>${p.mean_sentence_length.toFixed(1)}</b><span>avg sentence</span></div>
+        <div><b>${p.formality}/6</b><span>formality</span></div>
+        <div><b>${p.sentence_variation.toFixed(2)}</b><span>rhythm variation</span></div>
+      </div>
+      <div class="notice">${esc(r.advice)}</div>
+      <ul class="plain">${r.description.map(d=>`<li>${esc(d)}</li>`).join("")}</ul>
+      <p class="muted small">Tick “use my style profile” on the Humanize tab to apply it.</p>`;
+    $("#h-style").checked = true;
+  } catch (e) { $("#s-out").innerHTML = `<p class="err">${esc(e.message)}</p>`; }
+  $("#s-go").disabled = false;
+};
+</script>
+</body>
+</html>

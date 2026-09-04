@@ -114,7 +114,9 @@ class Humanizer:
     def __init__(self, backend: Optional[Any] = None) -> None:
         # A model-backed rewriter can be plugged in here; the rule engine is
         # the default so the system works offline and deterministically.
-        self.backend = backend
+        from wia.humanizer.llm import NullBackend
+
+        self.backend = backend or NullBackend()
 
     def humanize(
         self,
@@ -160,6 +162,11 @@ class Humanizer:
             )
             result.candidates.append(candidate)
 
+        model_candidate = self._model_candidate(text, plan, options, profile,
+                                                 language, locale)
+        if model_candidate is not None:
+            result.candidates.append(model_candidate)
+
         accepted = [c for c in result.candidates if c.accepted]
         if accepted:
             result.recommended = max(accepted, key=lambda c: c.score.overall).label
@@ -171,6 +178,33 @@ class Humanizer:
         if plan.findings:
             result.notes.append("Found: " + "; ".join(plan.findings) + ".")
         return result
+
+    def _model_candidate(
+        self, text: str, plan: Plan, options: HumanizeOptions,
+        profile: Optional[StyleProfile], language: str, locale: str,
+    ) -> Optional[Candidate]:
+        """Ask the configured model for a rewrite, and judge it like any other."""
+        from wia.humanizer.llm import NullBackend, build_brief
+
+        if isinstance(self.backend, NullBackend):
+            return None
+        brief = build_brief(options, plan, profile)
+        try:
+            proposal = self.backend.rewrite(text, brief, language, locale)
+        except Exception:
+            return None
+        if not proposal or proposal.strip() == text.strip():
+            return None
+        score = score_rewrite(text, proposal, options, language, profile)
+        return Candidate(
+            "D", f"Model-assisted ({getattr(self.backend, 'name', 'model')})",
+            proposal if score.accepted else text, score,
+            operations=["llm_rewrite"],
+            rejected_reason="" if score.accepted else (
+                score.meaning["violations"][0]["detail"]
+                if score.meaning and score.meaning.get("violations") else "meaning changed"
+            ),
+        )
 
     # -- internals ---------------------------------------------------------
     def _build_candidate(

@@ -26,6 +26,17 @@ _ABBREV = {
 }
 
 _SENT_END = re.compile(r"([.!?…]+[)\]\"'”’]*)(\s+|$)")
+
+#: Words that almost always start a new sentence rather than continue one.
+#: They let "…at 9 a.m. She left" split while "Dhr. Jansen" stays whole.
+#: Deliberately limited to pronouns and demonstratives — a determiner like
+#: "De" is far more likely to be part of a Dutch surname than a new sentence.
+_STRONG_STARTERS = {
+    "She", "He", "It", "They", "We", "I", "You", "This", "These", "Those",
+    "There", "However", "But",
+    "Hij", "Zij", "Ze", "Wij", "Ik", "Jij", "Jullie", "Dit", "Deze", "Er",
+    "Maar", "Toch",
+}
 _TRAILING_TOKEN = re.compile(r"([^\s.]+)\.$")
 _PARA_SPLIT = re.compile(r"\n\s*\n")
 
@@ -65,7 +76,7 @@ def sentences(text: str, offset: int = 0) -> List[Segment]:
         for m in _SENT_END.finditer(body):
             end = m.end(1)
             candidate = body[cursor:end]
-            if _is_abbreviation(candidate):
+            if _is_abbreviation(candidate) and not _starts_new_sentence(body, m.end()):
                 continue
             seg_text = candidate.strip()
             if seg_text:
@@ -93,6 +104,12 @@ def sentences(text: str, offset: int = 0) -> List[Segment]:
             )
             index += 1
     return out
+
+
+def _starts_new_sentence(body: str, position: int) -> bool:
+    """True when what follows can only be the start of a new sentence."""
+    following = body[position:].split()
+    return bool(following) and following[0].strip(",.;:!?\"'“”‘’") in _STRONG_STARTERS
 
 
 def _paragraph_spans(text: str) -> List[tuple[int, int]]:

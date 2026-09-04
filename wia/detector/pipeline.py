@@ -65,6 +65,7 @@ class Detector:
 
         blob = json.loads(p.read_text(encoding="utf-8"))
         base = LinearModel.from_dict(blob["global"] if "global" in blob else blob)
+        base.meta = {**base.meta, **(blob.get("meta") or {})}
         per_lang = {
             lang: LinearModel.from_dict(m)
             for lang, m in (blob.get("by_language") or {}).items()
