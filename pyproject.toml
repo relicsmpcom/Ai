@@ -23,7 +23,13 @@ build-backend = "setuptools.build_meta"
 include = ["wia*"]
 
 [tool.setuptools.package-data]
-wia = ["data/humanbench/*.jsonl", "detector/weights.json", "web/*", "lexicons/*.json"]
+wia = [
+  "data/humanbench/*.jsonl",
+  "data/humanbench/*.md",
+  "detector/weights.json",
+  "web/*.html",
+  "lexicons/*.json",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

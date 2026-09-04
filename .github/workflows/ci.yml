@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: pip install -e ".[api,dev]"
+      - name: Validate the benchmark corpus
+        run: wia bench --summary
+      - name: Tests
+        run: pytest -q
+      - name: Evaluation (must not regress on the numbers that matter)
+        run: |
+          python - <<'PY'
+          from wia.bench import run_cross_validation, run_eval
+          cv = run_cross_validation(folds=5)["metrics"]
+          held = run_eval(split="test")
+          assert cv["false_positive_rate"] <= 0.02, cv["false_positive_rate"]
+          assert cv["roc_auc_ai"] >= 0.80, cv["roc_auc_ai"]
+          assert held["hard_negatives"]["accused_as_ai"] == 0
+          print("FPR", cv["false_positive_rate"], "AUC", round(cv["roc_auc_ai"], 3))
+          PY

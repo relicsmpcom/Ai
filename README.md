@@ -194,7 +194,7 @@ wia/
   bench/       HumanBench schema, metrics, training, evaluation
   api/         FastAPI service
   data/        the seed corpus + its data card
-web/           the single-file UI
+  web/         the single-file UI
 tests/         105 tests
 docs/          roadmap, roadmap status, architecture, evaluation
 ```

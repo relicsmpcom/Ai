@@ -36,7 +36,7 @@ from wia.humanizer.ops import OPS
 from wia.features import FEATURES
 from wia.meaning.guard import check as meaning_check
 
-WEB_DIR = Path(__file__).resolve().parent.parent.parent / "web"
+WEB_DIR = Path(__file__).resolve().parent.parent / "web"
 
 DISCLAIMER = (
     "Authorship estimates are probabilistic and can be wrong. They are not "
