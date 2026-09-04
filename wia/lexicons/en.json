@@ -1,0 +1,428 @@
+{
+ "simplify": {
+  "utilize": "use",
+  "utilise": "use",
+  "utilizes": "uses",
+  "utilizing": "using",
+  "facilitate": "help",
+  "facilitates": "helps",
+  "leverage": "use",
+  "leveraging": "using",
+  "commence": "start",
+  "commenced": "started",
+  "terminate": "end",
+  "endeavour": "try",
+  "endeavor": "try",
+  "ascertain": "find out",
+  "obtain": "get",
+  "purchase": "buy",
+  "require": "need",
+  "requires": "needs",
+  "requirement": "need",
+  "sufficient": "enough",
+  "additional": "more",
+  "numerous": "many",
+  "approximately": "about",
+  "subsequently": "then",
+  "prior to": "before",
+  "in order to": "to",
+  "due to the fact that": "because",
+  "in the event that": "if",
+  "at this point in time": "now",
+  "a large number of": "many",
+  "a wide range of": "many",
+  "the majority of": "most",
+  "in spite of the fact that": "although",
+  "with regard to": "about",
+  "with respect to": "about",
+  "in terms of": "for",
+  "on a regular basis": "regularly",
+  "make a decision": "decide",
+  "provide assistance": "help",
+  "conduct an analysis": "analyse",
+  "give consideration to": "consider",
+  "it is important to note that": "",
+  "it should be noted that": "",
+  "it is worth noting that": "",
+  "needless to say": "",
+  "as previously mentioned": "",
+  "in conclusion": "",
+  "demonstrate": "show",
+  "demonstrates": "shows",
+  "indicate": "show",
+  "indicates": "shows",
+  "implement": "set up",
+  "implemented": "set up",
+  "optimize": "improve",
+  "optimise": "improve",
+  "streamline": "simplify",
+  "enhance": "improve",
+  "enhances": "improves",
+  "empower": "support",
+  "initiate": "start",
+  "finalize": "finish",
+  "finalise": "finish",
+  "methodology": "method",
+  "functionality": "features",
+  "individuals": "people",
+  "personnel": "staff",
+  "residence": "home",
+  "assist": "help",
+  "attempt": "try",
+  "inquire": "ask",
+  "regarding": "about",
+  "concerning": "about",
+  "notwithstanding": "despite",
+  "aforementioned": "this",
+  "utilization": "use",
+  "commencement": "start",
+  "enable": "allow",
+  "enables": "allows"
+ },
+ "formalize": {
+  "get": "obtain",
+  "buy": "purchase",
+  "help": "assist",
+  "try": "attempt",
+  "ask": "enquire",
+  "start": "begin",
+  "end": "conclude",
+  "show": "demonstrate",
+  "a lot of": "considerable",
+  "lots of": "many",
+  "kind of": "somewhat",
+  "sort of": "somewhat",
+  "stuff": "material",
+  "things": "items",
+  "big": "significant",
+  "huge": "substantial",
+  "really": "particularly",
+  "very": "highly",
+  "pretty": "fairly",
+  "okay": "acceptable",
+  "figure out": "determine",
+  "find out": "establish",
+  "look into": "examine",
+  "deal with": "address",
+  "put off": "postpone",
+  "set up": "establish",
+  "go up": "increase",
+  "go down": "decrease",
+  "check": "verify"
+ },
+ "transitions": {
+  "conversational": [
+   "still",
+   "that said",
+   "even so",
+   "in practice",
+   "meanwhile",
+   "which means",
+   "so",
+   "then again",
+   "either way",
+   "on top of that",
+   "at the same time",
+   "the thing is",
+   "put differently"
+  ],
+  "professional": [
+   "that said",
+   "in practice",
+   "as a result",
+   "for that reason",
+   "at the same time",
+   "more importantly",
+   "in short",
+   "on the other hand",
+   "by comparison",
+   "either way"
+  ],
+  "academic": [
+   "by contrast",
+   "accordingly",
+   "even so",
+   "correspondingly",
+   "on this reading",
+   "taken together",
+   "in turn",
+   "conversely"
+  ],
+  "narrative": [
+   "then",
+   "after that",
+   "eventually",
+   "before long",
+   "meanwhile",
+   "in the end",
+   "by then",
+   "somewhere along the way"
+  ],
+  "direct": [
+   "but",
+   "so",
+   "and",
+   "then",
+   "still",
+   "instead",
+   "either way"
+  ]
+ },
+ "mechanical_transitions": {
+  "furthermore": [
+   "also",
+   "on top of that",
+   "and",
+   "beyond that"
+  ],
+  "moreover": [
+   "and",
+   "on top of that",
+   "besides",
+   "what's more"
+  ],
+  "additionally": [
+   "also",
+   "and",
+   "as well",
+   "on top of that"
+  ],
+  "consequently": [
+   "so",
+   "as a result",
+   "which means",
+   "that means"
+  ],
+  "therefore": [
+   "so",
+   "which is why",
+   "that's why",
+   "as a result"
+  ],
+  "thus": [
+   "so",
+   "which means",
+   "that's why"
+  ],
+  "hence": [
+   "so",
+   "which is why"
+  ],
+  "nevertheless": [
+   "even so",
+   "still",
+   "all the same"
+  ],
+  "nonetheless": [
+   "even so",
+   "still",
+   "all the same"
+  ],
+  "subsequently": [
+   "then",
+   "after that",
+   "later"
+  ],
+  "in addition": [
+   "also",
+   "on top of that",
+   "and"
+  ],
+  "in conclusion": [
+   "in the end",
+   "so",
+   "all told"
+  ],
+  "to summarize": [
+   "in short",
+   "put simply"
+  ],
+  "as a result": [
+   "so",
+   "which means",
+   "that's why"
+  ],
+  "in essence": [
+   "basically",
+   "put simply"
+  ],
+  "it is important to note that": [
+   "worth saying:",
+   "note that",
+   ""
+  ],
+  "it should be noted that": [
+   "note that",
+   ""
+  ],
+  "it is worth noting that": [
+   "worth saying:",
+   ""
+  ]
+ },
+ "locale": {
+  "en-GB": {
+   "analyze": "analyse",
+   "organize": "organise",
+   "recognize": "recognise",
+   "realize": "realise",
+   "apologize": "apologise",
+   "color": "colour",
+   "behavior": "behaviour",
+   "favorite": "favourite",
+   "center": "centre",
+   "meter": "metre",
+   "theater": "theatre",
+   "defense": "defence",
+   "license": "licence",
+   "traveled": "travelled",
+   "traveling": "travelling",
+   "canceled": "cancelled",
+   "labeled": "labelled",
+   "program": "programme",
+   "catalog": "catalogue",
+   "dialog": "dialogue",
+   "gray": "grey",
+   "math": "maths",
+   "vacation": "holiday",
+   "apartment": "flat",
+   "elevator": "lift",
+   "fall": "autumn",
+   "cellphone": "mobile"
+  },
+  "en-US": {
+   "analyse": "analyze",
+   "organise": "organize",
+   "recognise": "recognize",
+   "realise": "realize",
+   "apologise": "apologize",
+   "colour": "color",
+   "behaviour": "behavior",
+   "favourite": "favorite",
+   "centre": "center",
+   "metre": "meter",
+   "theatre": "theater",
+   "defence": "defense",
+   "licence": "license",
+   "travelled": "traveled",
+   "travelling": "traveling",
+   "cancelled": "canceled",
+   "labelled": "labeled",
+   "programme": "program",
+   "catalogue": "catalog",
+   "dialogue": "dialog",
+   "grey": "gray",
+   "maths": "math",
+   "holiday": "vacation",
+   "flat": "apartment",
+   "lift": "elevator",
+   "autumn": "fall",
+   "mobile": "cellphone"
+  }
+ },
+ "openers": {
+  "drop": [
+   "basically",
+   "essentially",
+   "fundamentally",
+   "at the end of the day",
+   "in today's world",
+   "in today's fast-paced world",
+   "needless to say",
+   "as we all know",
+   "without a doubt",
+   "let's dive in",
+   "let's face it",
+   "in today's fast-paced digital landscape",
+   "in today's digital landscape",
+   "in today's business environment",
+   "in the modern era",
+   "in the ever-evolving landscape",
+   "in an increasingly connected world"
+  ]
+ },
+ "hedges": [
+  "I think",
+  "probably",
+  "roughly",
+  "in my experience",
+  "as far as I can tell",
+  "more or less",
+  "give or take",
+  "for what it's worth"
+ ],
+ "boosters_to_soften": {
+  "crucial": [
+   "important",
+   "central",
+   "key"
+  ],
+  "vital": [
+   "important",
+   "essential to this",
+   "central"
+  ],
+  "essential": [
+   "important",
+   "necessary",
+   "needed"
+  ],
+  "pivotal": [
+   "important",
+   "decisive"
+  ],
+  "paramount": [
+   "the priority",
+   "most important"
+  ],
+  "invaluable": [
+   "useful",
+   "valuable"
+  ],
+  "revolutionary": [
+   "new",
+   "unusual"
+  ],
+  "groundbreaking": [
+   "new",
+   "novel"
+  ],
+  "cutting-edge": [
+   "modern",
+   "current"
+  ],
+  "state-of-the-art": [
+   "modern",
+   "current"
+  ],
+  "seamless": [
+   "smooth",
+   "straightforward"
+  ],
+  "seamlessly": [
+   "smoothly",
+   "without friction"
+  ],
+  "robust": [
+   "reliable",
+   "sturdy"
+  ],
+  "comprehensive": [
+   "complete",
+   "full",
+   "thorough"
+  ],
+  "unparalleled": [
+   "unusual",
+   "rare"
+  ],
+  "game-changing": [
+   "significant",
+   "major"
+  ],
+  "world-class": [
+   "strong",
+   "excellent"
+  ]
+ }
+}

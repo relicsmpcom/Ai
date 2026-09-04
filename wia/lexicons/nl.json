@@ -1,0 +1,313 @@
+{
+ "simplify": {
+  "benutten": "gebruiken",
+  "faciliteren": "helpen",
+  "optimaliseren": "verbeteren",
+  "implementeren": "invoeren",
+  "realiseren": "waarmaken",
+  "genereren": "opleveren",
+  "initiëren": "starten",
+  "finaliseren": "afronden",
+  "communiceren": "vertellen",
+  "dienen te": "moeten",
+  "dient te": "moet",
+  "diende te": "moest",
+  "teneinde": "om",
+  "alsmede": "en",
+  "alvorens": "voordat",
+  "derhalve": "dus",
+  "bijgevolg": "dus",
+  "aangezien": "omdat",
+  "indien": "als",
+  "middels": "met",
+  "middels een": "met een",
+  "conform": "volgens",
+  "inzake": "over",
+  "met betrekking tot": "over",
+  "ten aanzien van": "over",
+  "in het kader van": "voor",
+  "op basis van": "volgens",
+  "naar aanleiding van": "na",
+  "een aantal": "een paar",
+  "een breed scala aan": "veel",
+  "een verscheidenheid aan": "verschillende",
+  "de meerderheid van": "de meeste",
+  "een aanzienlijk deel": "een groot deel",
+  "het is belangrijk om te vermelden dat": "",
+  "het is van belang dat": "",
+  "het dient te worden opgemerkt dat": "",
+  "zoals eerder vermeld": "",
+  "kortom": "",
+  "samenvattend": "",
+  "concluderend": "",
+  "aanschaffen": "kopen",
+  "verkrijgen": "krijgen",
+  "assisteren": "helpen",
+  "informeren": "laten weten",
+  "verzoeken": "vragen",
+  "beschikken over": "hebben",
+  "gebruikmaken van": "gebruiken",
+  "van toepassing zijn op": "gelden voor",
+  "zorg dragen voor": "zorgen voor",
+  "in staat zijn om": "kunnen",
+  "werkzaamheden": "werk",
+  "personeel": "mensen",
+  "woonachtig": "wonend",
+  "voornoemde": "dit",
+  "desalniettemin": "toch",
+  "niettemin": "toch",
+  "voorts": "verder",
+  "tevens": "ook",
+  "hetgeen": "wat",
+  "in staat zijn om te": "kunnen"
+ },
+ "formalize": {
+  "krijgen": "ontvangen",
+  "kopen": "aanschaffen",
+  "helpen": "assisteren",
+  "vragen": "verzoeken",
+  "beginnen": "aanvangen",
+  "stoppen": "beëindigen",
+  "laten zien": "aantonen",
+  "veel": "een aanzienlijk aantal",
+  "een beetje": "enigszins",
+  "gewoon": "eenvoudigweg",
+  "best": "redelijk",
+  "heel": "zeer",
+  "echt": "daadwerkelijk",
+  "spullen": "materialen",
+  "dingen": "zaken",
+  "groot": "aanzienlijk",
+  "uitzoeken": "onderzoeken",
+  "regelen": "organiseren",
+  "opzetten": "inrichten",
+  "checken": "controleren",
+  "omhooggaan": "toenemen",
+  "omlaaggaan": "afnemen",
+  "over": "met betrekking tot"
+ },
+ "transitions": {
+  "conversational": [
+   "toch",
+   "maar goed",
+   "in de praktijk",
+   "tegelijk",
+   "en dus",
+   "juist daarom",
+   "aan de andere kant",
+   "hoe dan ook",
+   "wat wel helpt",
+   "en dan nog iets"
+  ],
+  "professional": [
+   "daarom",
+   "in de praktijk",
+   "tegelijk",
+   "aan de andere kant",
+   "belangrijker nog",
+   "kort gezegd",
+   "wat betekent dat",
+   "om die reden",
+   "daar staat tegenover"
+  ],
+  "academic": [
+   "daarentegen",
+   "in dat licht",
+   "dientengevolge",
+   "omgekeerd",
+   "alles bij elkaar",
+   "op zijn beurt",
+   "in vergelijking daarmee"
+  ],
+  "narrative": [
+   "daarna",
+   "vervolgens",
+   "uiteindelijk",
+   "even later",
+   "ondertussen",
+   "op een gegeven moment",
+   "en toen"
+  ],
+  "direct": [
+   "maar",
+   "dus",
+   "en",
+   "toch",
+   "juist",
+   "in plaats daarvan"
+  ]
+ },
+ "mechanical_transitions": {
+  "bovendien": [
+   "ook",
+   "daar komt bij",
+   "en",
+   "verder"
+  ],
+  "daarnaast": [
+   "ook",
+   "verder",
+   "en",
+   "daar komt bij"
+  ],
+  "tevens": [
+   "ook",
+   "en"
+  ],
+  "derhalve": [
+   "dus",
+   "daarom",
+   "en dus"
+  ],
+  "bijgevolg": [
+   "dus",
+   "daardoor"
+  ],
+  "desalniettemin": [
+   "toch",
+   "en toch",
+   "maar"
+  ],
+  "niettemin": [
+   "toch",
+   "maar"
+  ],
+  "voorts": [
+   "verder",
+   "ook"
+  ],
+  "vervolgens": [
+   "daarna",
+   "toen",
+   "en toen"
+  ],
+  "kortom": [
+   "kort gezegd",
+   "dus",
+   ""
+  ],
+  "samenvattend": [
+   "kort gezegd",
+   ""
+  ],
+  "ten slotte": [
+   "tot slot",
+   "en als laatste"
+  ],
+  "het is belangrijk om te vermelden dat": [
+   "let op:",
+   ""
+  ],
+  "het is van belang dat": [
+   "belangrijk:",
+   ""
+  ],
+  "in het bijzonder": [
+   "vooral"
+  ]
+ },
+ "locale": {
+  "nl-BE": {
+   "leuk": "plezant",
+   "patat": "frieten",
+   "sinaasappel": "appelsien",
+   "opruiming": "solden",
+   "gsm": "gsm",
+   "bellen": "telefoneren",
+   "ophalen": "afhalen",
+   "middag": "noen",
+   "kaartje": "ticket",
+   "spullen": "gerief",
+   "fiets": "velo",
+   "afspraak": "afspraak"
+  },
+  "nl-NL": {
+   "plezant": "leuk",
+   "frieten": "patat",
+   "appelsien": "sinaasappel",
+   "solden": "opruiming",
+   "noen": "middag",
+   "velo": "fiets",
+   "gerief": "spullen",
+   "goesting": "zin",
+   "seffens": "zo meteen"
+  }
+ },
+ "openers": {
+  "drop": [
+   "in de huidige tijd",
+   "in de snel veranderende wereld",
+   "zoals we allemaal weten",
+   "het spreekt voor zich dat",
+   "in dit artikel",
+   "laten we duiken in",
+   "zonder twijfel",
+   "in de huidige snel veranderende wereld",
+   "in het huidige digitale landschap",
+   "in de wereld van vandaag",
+   "in deze snel veranderende tijd"
+  ]
+ },
+ "hedges": [
+  "ik denk",
+  "waarschijnlijk",
+  "ongeveer",
+  "volgens mij",
+  "voor zover ik weet",
+  "min of meer",
+  "eerlijk gezegd"
+ ],
+ "boosters_to_soften": {
+  "cruciaal": [
+   "belangrijk",
+   "doorslaggevend",
+   "centraal"
+  ],
+  "essentieel": [
+   "belangrijk",
+   "nodig",
+   "noodzakelijk"
+  ],
+  "vitaal": [
+   "belangrijk",
+   "van belang"
+  ],
+  "onmisbaar": [
+   "nuttig",
+   "waardevol"
+  ],
+  "revolutionair": [
+   "nieuw",
+   "ongewoon"
+  ],
+  "baanbrekend": [
+   "nieuw",
+   "vernieuwend"
+  ],
+  "toonaangevend": [
+   "sterk",
+   "vooraanstaand"
+  ],
+  "naadloos": [
+   "soepel",
+   "vlot"
+  ],
+  "robuust": [
+   "betrouwbaar",
+   "stevig"
+  ],
+  "uitgebreid": [
+   "compleet",
+   "volledig",
+   "grondig"
+  ],
+  "ongeëvenaard": [
+   "bijzonder",
+   "zeldzaam"
+  ],
+  "innovatief": [
+   "nieuw",
+   "vernieuwend"
+  ]
+ }
+}
