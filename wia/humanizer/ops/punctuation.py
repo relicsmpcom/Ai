@@ -77,10 +77,12 @@ def fix_articles(text: str, ctx: Context) -> str:
         correct = "an" if vowel else "a"
         if article.lower() == correct:
             return m.group(0)
-        out = correct.upper() if article[0].isupper() else correct
+        out = correct.capitalize() if article[0].isupper() else correct
         return f"{out}{gap}{word}"
 
-    return re.sub(r"\b(an?)(\s+)([A-Za-z][\w'-]*)", sub, text)
+    # Case-insensitive: a sentence-initial "A" needs fixing just as much
+    # as a mid-sentence "a", and it is the one readers notice.
+    return re.sub(r"\b(an?)(\s+)([A-Za-z][\w'-]*)", sub, text, flags=re.IGNORECASE)
 
 
 @op("fix_sentence_case", "Restore capitals that an edit knocked off.", order=97,

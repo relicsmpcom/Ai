@@ -1,0 +1,8 @@
+line-length = 100
+
+[lint]
+select = ["F", "E9", "B", "SIM", "C4"]
+# A word list reads better as one quoted block than as a hundred string
+# literals, and B905's strict= on zip is noise in code that zips deliberately
+# unequal sequences.
+ignore = ["SIM905", "B905"]

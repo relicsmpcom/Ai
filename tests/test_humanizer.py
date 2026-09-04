@@ -178,3 +178,20 @@ def test_a_failing_operation_is_reported_rather_than_swallowed():
         assert any("_test_explode" in note for note in ctx.notes)
     finally:
         OPS.pop("_test_explode", None)
+
+
+def test_article_agreement_survives_a_word_swap(humanizer):
+    """Replacing "paramount" with "important" must fix the article too."""
+    text = ("A paramount concern is latency across the whole platform. The team treats it as a "
+            "crucial issue and reviews it every week without fail.")
+    for candidate in humanizer.humanize(text, HumanizeOptions()).candidates:
+        assert " a important" not in candidate.text.lower()
+        assert "AN " not in candidate.text  # capitalisation, not shouting
+
+
+def test_a_coordinator_before_an_inverted_dutch_clause_is_repaired(humanizer):
+    text = ("Bovendien is het van belang dat u uw aanvraag tijdig indient. Daarnaast dient u de "
+            "vereiste documenten mee te sturen. Kortom, een zorgvuldige voorbereiding is cruciaal.")
+    for candidate in humanizer.humanize(text, HumanizeOptions(language="nl")).candidates:
+        assert "En dient u" not in candidate.text
+        assert "En is het" not in candidate.text

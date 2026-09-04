@@ -8,9 +8,33 @@ from __future__ import annotations
 
 from typing import FrozenSet
 
-NL_FUNCTION_WORDS: FrozenSet[str] = frozenset(["de", "het", "een", "en", "van", "in", "op", "te", "dat", "die", "is", "was", "zijn", "niet", "met", "voor", "aan", "er", "om", "als", "maar", "dan", "ook", "nog", "wel", "bij", "door", "over", "naar", "uit", "ze", "hij", "zij", "we", "wij", "je", "jij", "jullie", "u", "ik", "mij", "me", "hem", "haar", "hen", "hun", "ons", "onze", "mijn", "jouw", "zijn", "deze", "dit", "dat", "daar", "hier", "waar", "wie", "wat", "hoe", "waarom", "wanneer", "welke", "worden", "wordt", "werd", "werden", "heeft", "hebben", "had", "hadden", "kan", "kunnen", "kon", "konden", "zal", "zullen", "zou", "zouden", "moet", "moeten", "moest", "mag", "mogen", "wil", "willen", "doen", "doet", "deed", "gaan", "gaat", "ging", "komen", "komt", "kwam", "maken", "maakt", "maakte", "al", "alleen", "altijd", "andere", "veel", "meer", "minder", "minst", "weinig", "zeer", "erg", "heel", "best", "beter", "goed", "nu", "toen", "straks", "eerst", "laatst", "tussen", "tegen", "zonder", "binnen", "buiten", "onder", "boven", "naast", "volgens", "tijdens", "sinds", "ondanks", "omdat", "doordat", "zodat", "hoewel", "terwijl", "indien", "tenzij", "want", "dus", "echter", "bovendien", "daarnaast", "daarom", "immers", "namelijk", "trouwens", "overigens", "eigenlijk", "gewoon", "misschien", "waarschijnlijk", "zeker", "natuurlijk", "vooral", "juist", "toch", "even", "nooit", "vaak", "soms"])
+NL_FUNCTION_WORDS: FrozenSet[str] = frozenset("""
+aan al alleen als altijd andere best beter bij binnen boven bovendien buiten
+daar daarnaast daarom dan dat de deed deze die dit doen doet door doordat
+dus echter een eerst eigenlijk en er erg even gaan gaat gewoon ging goed
+haar had hadden hebben heeft heel hem hen het hier hij hoe hoewel hun ik
+immers in indien is je jij jouw juist jullie kan komen komt kon konden
+kunnen kwam laatst maakt maakte maar mag maken me meer met mij mijn minder
+minst misschien moest moet moeten mogen naar naast namelijk natuurlijk niet
+nog nooit nu om omdat ondanks onder ons onze ook op over overigens sinds
+soms straks te tegen tenzij terwijl tijdens toch toen trouwens tussen u uit
+vaak van veel volgens voor vooral waar waarom waarschijnlijk wanneer want
+was wat we weinig wel welke werd werden wie wij wil willen worden wordt zal
+ze zeer zeker zij zijn zodat zonder zou zouden zullen
+""".split())
 
-EN_FUNCTION_WORDS: FrozenSet[str] = frozenset(["the", "a", "an", "and", "or", "but", "of", "in", "on", "to", "for", "with", "at", "by", "from", "as", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "do", "does", "did", "will", "would", "can", "could", "shall", "should", "may", "might", "must", "not", "no", "nor", "so", "than", "then", "that", "this", "these", "those", "there", "here", "where", "when", "why", "how", "who", "whom", "whose", "which", "what", "if", "unless", "because", "since", "while", "although", "though", "however", "therefore", "thus", "moreover", "furthermore", "additionally", "also", "too", "very", "much", "many", "more", "most", "less", "least", "few", "some", "any", "all", "every", "each", "both", "either", "neither", "only", "just", "even", "still", "yet", "again", "ever", "never", "often", "sometimes", "always", "about", "after", "before", "during", "between", "among", "against", "without", "within", "into", "onto", "over", "under", "above", "below", "through", "across", "around", "off", "out", "up", "down", "again", "further", "once", "i", "me", "my", "we", "us", "our", "you", "your", "he", "him", "his", "she", "her", "it", "its", "they", "them", "their"])
+EN_FUNCTION_WORDS: FrozenSet[str] = frozenset("""
+a about above across additionally after again against all also although
+always among an and any are around as at be because been before being below
+between both but by can could did do does down during each either even ever
+every few for from further furthermore had has have he her here him his how
+however i if in into is it its just least less many may me might more
+moreover most much must my neither never no nor not of off often on once
+only onto or our out over shall she should since so some sometimes still
+than that the their them then there therefore these they this those though
+through thus to too under unless up us very was we were what when where
+which while who whom whose why will with within without would yet you your
+""".split())
 
 # Words that essentially never appear in the other language and are frequent in
 # their own — the strongest single-token evidence available.  Derived by
@@ -24,9 +48,10 @@ _EN_MARKERS = frozenset(
 )
 
 # Contractions expand to markers so "didn't" / "we're" vote like "did" / "are".
-_EN_CONTRACTION_STEMS = frozenset(
-    ["don", "doesn", "didn", "isn", "aren", "wasn", "weren", "can", "couldn", "shouldn", "wouldn", "won", "hasn", "haven", "hadn", "ain", "let", "it's", "i'm", "we're", "they're", "you're", "that's", "there's"]
-)
+_EN_CONTRACTION_STEMS = frozenset("""
+ain aren can couldn didn doesn don hadn hasn haven i'm isn it's let shouldn
+that's there's they're wasn we're weren won wouldn you're
+""".split())
 
 # Orthographic n-grams: cheap, robust for short inputs where token overlap
 # ('de', 'in', 'is') is ambiguous.

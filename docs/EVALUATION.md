@@ -17,12 +17,13 @@ The headline is **not** accuracy. It is the false-positive rate and the
 hard-negative slice, because the failure that hurts a real person is a detector
 telling them their own writing was generated.
 
-The current model trades recall for that safety: AI recall is 0.35 at a
-false-positive rate of 0.000, and one document in five is returned as
-*uncertain* rather than guessed at. Ranking is strong (ROC-AUC 0.905), so the
-evidence is there — the decision policy is deliberately refusing to spend it.
-Mixed authorship is the weakest class by a wide margin and needs span-level
-labels and longer documents before it will work.
+The current model trades recall for that safety: one document in five is
+returned as *uncertain* rather than guessed at, and the AI class is only
+committed to when the evidence clears a threshold fitted to hold false
+positives at 1%. Ranking is strong, so the evidence is there — the decision
+policy is deliberately refusing to spend it. Mixed authorship is the weakest
+class by a wide margin and needs span-level labels and longer documents before
+it will work.
 
 ---
 
