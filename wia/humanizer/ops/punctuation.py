@@ -122,7 +122,11 @@ def repair_dutch_word_order(text: str, ctx: Context) -> str:
     """
     if not ctx.is_nl:
         return text
-    from wia.humanizer.ops.dutch import deinvert, is_inverted
+    from wia.humanizer.ops.dutch import (
+        deinvert,
+        is_inverted,
+        repair_impersonal_passive,
+    )
     from wia.text.segment import sentences
 
     out = text
@@ -135,9 +139,9 @@ def repair_dutch_word_order(text: str, ctx: Context) -> str:
                 prefix = coordinator + " "
                 candidate = body[len(prefix):]
                 break
-        if not is_inverted(candidate):
+        if not is_inverted(candidate) or candidate.rstrip().endswith("?"):
             continue
-        fixed = deinvert(candidate)
+        fixed = deinvert(candidate) or repair_impersonal_passive(candidate)
         if not fixed:
             continue
         if prefix:

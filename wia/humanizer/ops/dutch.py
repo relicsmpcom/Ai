@@ -57,20 +57,27 @@ beide sommige veel enkele meerdere ons
 #: Words that cannot be (part of) the subject in the V2 slot: prepositions,
 #: adverbs and conjunctions.  Anything on this list ends the subject phrase.
 NON_SUBJECT = frozenset("""
-van in op met voor aan bij uit over door naar tot tussen onder boven binnen
-buiten tegen sinds tijdens zonder om na per vanaf volgens ondanks wegens ook
-niet altijd vaak nog al weer dan zo echt snel direct even juist toch wel
-eens nooit soms hier daar waar en maar want of dus omdat terwijl hoewel
-zodat indien als wanneer nadat voordat te
+aan al als altijd bij binnen boven buiten daar dan direct door dus echt eens
+elkaar en even haar hem hen hier hoewel hun in indien jou jouw juist maar me
+met mij mijn na naar nadat niet nog nooit of om omdat ondanks onder ons ook
+op over per sinds snel soms te tegen terwijl tijdens toch tot tussen uit uw
+vaak van vanaf volgens voor voordat waar wanneer want weer wegens wel zich
+zo zodat zonder
 """.split())
 
 _TOKEN_RE = re.compile(r"\S+")
 
 
 def is_inverted(fragment: str) -> bool:
-    """True when the clause opens with a finite verb (i.e. still inverted)."""
+    """True when the clause opens with a finite verb (i.e. still inverted).
+
+    A question is verb-initial by design, so it is never "inverted" in the
+    sense this module repairs — turning "Is de aanvraag behandeld?" into "De
+    aanvraag is behandeld?" would change a question into a statement wearing a
+    question mark.
+    """
     tokens = fragment.split()
-    if len(tokens) < 3:
+    if len(tokens) < 3 or fragment.rstrip().endswith("?"):
         return False
     first = tokens[0].strip(",.;:!?\"'“”‘’").lower()
     return first in FINITE_VERBS
@@ -119,9 +126,35 @@ def deinvert(fragment: str) -> Optional[str]:
     return out[:1].upper() + out[1:]
 
 
+#: Verbs that follow a finite verb in an impersonal passive, where there is no
+#: subject to move back: "kan worden gesteld", "moet worden opgemerkt".
+_IMPERSONAL_FOLLOWERS = frozenset(
+    "worden word zijn is hebben heeft gebleken besloten gesteld opgemerkt "
+    "geconcludeerd vastgesteld".split())
+
+
+def repair_impersonal_passive(fragment: str) -> Optional[str]:
+    """Give an impersonal passive its dummy subject back.
+
+    "Samenvattend kan worden gesteld dat…" loses its fronted adverb and becomes
+    "*Kan worden gesteld dat…", which has no subject to move. Dutch fixes this
+    with the placeholder "er" — semantically empty, so nothing is added to what
+    the sentence claims.
+    """
+    tokens = fragment.split()
+    if len(tokens) < 3 or fragment.rstrip().endswith("?"):
+        return None
+    if tokens[0].strip(",.;:!?").lower() not in FINITE_VERBS:
+        return None
+    if tokens[1].strip(",.;:!?").lower() not in _IMPERSONAL_FOLLOWERS:
+        return None
+    body = fragment.strip()
+    return "Er " + body[0].lower() + body[1:]
+
+
 def repair_after_fronting_removed(fragment: str) -> Optional[str]:
     """Fix a clause whose fronted element was just deleted."""
     if not is_inverted(fragment):
         stripped = fragment.strip()
         return stripped[:1].upper() + stripped[1:] if stripped else None
-    return deinvert(fragment.strip())
+    return deinvert(fragment.strip()) or repair_impersonal_passive(fragment.strip())

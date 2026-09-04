@@ -195,3 +195,54 @@ def test_a_coordinator_before_an_inverted_dutch_clause_is_repaired(humanizer):
     for candidate in humanizer.humanize(text, HumanizeOptions(language="nl")).candidates:
         assert "En dient u" not in candidate.text
         assert "En is het" not in candidate.text
+
+
+@pytest.mark.parametrize("fragment,expected", [
+    # An impersonal passive has no subject to move back; Dutch supplies "er".
+    ("Kan worden gesteld dat dit klopt.", "Er kan worden gesteld dat dit klopt."),
+    ("Moet worden opgemerkt dat dit afwijkt.", "Er moet worden opgemerkt dat dit afwijkt."),
+])
+def test_impersonal_passives_get_their_dummy_subject(fragment, expected):
+    from wia.humanizer.ops.dutch import repair_after_fronting_removed
+
+    assert repair_after_fronting_removed(fragment) == expected
+
+
+@pytest.mark.parametrize("fragment", [
+    "Laat me weten als er nog vragen zijn.",   # imperative, not an inversion
+    "Is de aanvraag al behandeld?",            # question, verb-initial by design
+])
+def test_verb_initial_dutch_that_is_already_correct_is_left_alone(fragment):
+    from wia.humanizer.ops.dutch import repair_after_fronting_removed
+
+    assert repair_after_fronting_removed(fragment) in (None, fragment)
+
+
+def test_no_rewrite_introduces_a_dutch_word_order_fault():
+    """Sweep every Dutch document: no candidate may open a sentence with a bare
+    finite verb that the author did not open that way."""
+    from wia.humanizer.ops.dutch import FINITE_VERBS
+    from wia.text.segment import sentences as split
+
+    imperatives = {"laat", "stuur", "kijk", "doe", "ga", "kom", "neem", "geef", "help",
+                   "zorg", "vraag", "maak", "lees", "denk", "let", "bel", "klik", "vul"}
+    humanizer = Humanizer()
+    faults = []
+    for sample in Dataset.load():
+        if sample.language != "nl":
+            continue
+        authors_openers = {
+            s.text.split()[0].lower().strip(",.;:!?") for s in split(sample.text) if s.text.split()
+        }
+        result = humanizer.humanize(sample.text, HumanizeOptions(language="nl"))
+        for candidate in result.candidates:
+            for segment in split(candidate.text):
+                tokens = segment.text.split()
+                if not tokens:
+                    continue
+                first = tokens[0].strip(",.;:!?\"'“”‘’").lower()
+                if (first in FINITE_VERBS and first not in imperatives
+                        and first not in authors_openers
+                        and not segment.text.rstrip().endswith("?")):
+                    faults.append((sample.id, candidate.label, segment.text[:60]))
+    assert not faults, faults
