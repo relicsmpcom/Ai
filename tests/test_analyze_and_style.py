@@ -6,7 +6,8 @@ from wia.humanizer import extract_style, style_match
 FLAT = (
     "The system processes requests in order. The system validates each request first. "
     "The system then stores the result. The system returns a confirmation to the caller. "
-    "The system logs every step for auditing. The system retries once on failure."
+    "The system logs every step for auditing. The system retries once on failure. "
+    "The system reports the outcome to the dashboard every night."
 )
 CASUAL = [
     "ok so quick update — the deploy went out at 4 and nothing broke, which surprised me.",
@@ -18,7 +19,7 @@ CASUAL = [
 def test_analysis_covers_the_basics():
     report = analyze(FLAT, "en")
     assert report.words > 40
-    assert report.sentences == 6
+    assert report.sentences == 7
     assert 0 <= report.readability["score"] <= 100
     assert report.rhythm["lengths"]
     assert report.style["profile"]["language"] == "en"
