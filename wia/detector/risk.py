@@ -56,11 +56,13 @@ def assess(doc: Doc, features: Dict[str, float]) -> List[RiskFactor]:
             0.85,
         ))
     elif n < 120:
+        # Length is already handled by shrink_toward_human; damping it a
+        # second time here would crush every short text into "unclear".
         out.append(RiskFactor(
             "short_text",
             "Short text. Estimates below ~120 words are noticeably less "
             "reliable and are reported with reduced confidence.",
-            0.35,
+            0.0,
         ))
 
     if features.get("long_word_ratio", 0) > 0.24 and features.get("first_person_rate", 0) < 0.4 \
@@ -69,7 +71,7 @@ def assess(doc: Doc, features: Dict[str, float]) -> List[RiskFactor]:
             "highly_formal",
             "Highly formal register. Formal human writing (policy, government, "
             "academic) shares surface patterns with generated text.",
-            0.45,
+            0.30,
         ))
 
     if _LEGAL_TERMS.search(doc.text):
@@ -77,7 +79,7 @@ def assess(doc: Doc, features: Dict[str, float]) -> List[RiskFactor]:
             "legal_or_boilerplate",
             "Legal or contractual language. This genre is formulaic by "
             "design and is a known false-positive source.",
-            0.5,
+            0.40,
         ))
 
     if features.get("mean_sentence_len", 0) < 11 and features.get("mattr", 1) < 0.66 and n >= 60:
@@ -86,7 +88,7 @@ def assess(doc: Doc, features: Dict[str, float]) -> List[RiskFactor]:
             "Short sentences and a small vocabulary. This is the profile of "
             "plain-language writing, language learners and some dyslexic "
             "writers as much as of generated text.",
-            0.5,
+            0.40,
         ))
 
     if _LITERAL_TRANSLATION.search(doc.text):
@@ -137,6 +139,8 @@ def dampen(probs: Sequence[float], factors: Sequence[RiskFactor]) -> List[float]
     # Damping does not add up linearly; take the strongest and give the rest a
     # diminishing say.
     ordered = sorted((f.damping for f in factors), reverse=True)
+    if not ordered or ordered[0] <= 0.0:
+        return list(probs)
     lam = ordered[0]
     for extra in ordered[1:]:
         lam = lam + (1 - lam) * extra * 0.4

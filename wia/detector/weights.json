@@ -1,0 +1,1613 @@
+{
+ "global": {
+  "classes": [
+   "human",
+   "mixed",
+   "ai"
+  ],
+  "feature_names": [
+   "mean_sentence_len",
+   "sentence_len_cv",
+   "sentence_len_range",
+   "short_sentence_ratio",
+   "long_sentence_ratio",
+   "length_step_regularity",
+   "paragraph_len_cv",
+   "mean_paragraph_sentences",
+   "mattr",
+   "hapax_ratio",
+   "mean_word_len",
+   "long_word_ratio",
+   "function_word_ratio",
+   "content_concentration",
+   "repeated_bigram_ratio",
+   "repeated_trigram_ratio",
+   "content_load_variation",
+   "commas_per_sentence",
+   "subordinator_rate",
+   "opening_diversity",
+   "sentence_initial_connective_ratio",
+   "paragraph_opening_symmetry",
+   "anaphoric_opener_rate",
+   "list_marker_ratio",
+   "formal_connective_rate",
+   "casual_connective_rate",
+   "hedge_rate",
+   "booster_rate",
+   "template_phrase_rate",
+   "corporate_filler_rate",
+   "first_person_rate",
+   "second_person_rate",
+   "tricolon_rate",
+   "exclamation_rate",
+   "question_rate",
+   "em_dash_rate",
+   "semicolon_rate",
+   "colon_rate",
+   "ellipsis_rate",
+   "contraction_rate",
+   "digit_rate",
+   "proper_noun_rate",
+   "emoji_rate",
+   "allcaps_rate",
+   "parenthetical_rate",
+   "informality_noise",
+   "redundancy_gain",
+   "adjacent_sentence_overlap",
+   "syllables_per_word",
+   "readability",
+   "uniform_paragraph_size"
+  ],
+  "weights": {
+   "mean_sentence_len": [
+    0.082641,
+    0.022599,
+    -0.10524
+   ],
+   "sentence_len_cv": [
+    -0.023768,
+    -0.046244,
+    0.070012
+   ],
+   "sentence_len_range": [
+    0.027966,
+    -0.09511,
+    0.067144
+   ],
+   "short_sentence_ratio": [
+    0.028973,
+    -0.029427,
+    0.000454
+   ],
+   "long_sentence_ratio": [
+    0.082619,
+    -0.103888,
+    0.021269
+   ],
+   "length_step_regularity": [
+    -0.013535,
+    -0.046424,
+    0.059958
+   ],
+   "paragraph_len_cv": [
+    0.005474,
+    0.023676,
+    -0.02915
+   ],
+   "mean_paragraph_sentences": [
+    0.002029,
+    -0.101636,
+    0.099607
+   ],
+   "mattr": [
+    0.070311,
+    0.018296,
+    -0.088607
+   ],
+   "hapax_ratio": [
+    -0.12329,
+    0.071153,
+    0.052137
+   ],
+   "mean_word_len": [
+    -0.141778,
+    0.030644,
+    0.111134
+   ],
+   "long_word_ratio": [
+    -0.171107,
+    0.000463,
+    0.170644
+   ],
+   "function_word_ratio": [
+    0.03288,
+    0.019917,
+    -0.052797
+   ],
+   "content_concentration": [
+    0.222018,
+    -0.100179,
+    -0.12184
+   ],
+   "repeated_bigram_ratio": [
+    -0.017393,
+    0.083864,
+    -0.066471
+   ],
+   "repeated_trigram_ratio": [
+    0.149699,
+    -0.129852,
+    -0.019847
+   ],
+   "content_load_variation": [
+    -0.137414,
+    0.053344,
+    0.08407
+   ],
+   "commas_per_sentence": [
+    -0.006979,
+    0.003561,
+    0.003418
+   ],
+   "subordinator_rate": [
+    0.039865,
+    -0.062848,
+    0.022983
+   ],
+   "opening_diversity": [
+    -0.173247,
+    0.091606,
+    0.081641
+   ],
+   "sentence_initial_connective_ratio": [
+    -0.193995,
+    -0.003764,
+    0.197759
+   ],
+   "paragraph_opening_symmetry": [
+    -0.080796,
+    0.07375,
+    0.007046
+   ],
+   "anaphoric_opener_rate": [
+    -0.070086,
+    0.050236,
+    0.01985
+   ],
+   "list_marker_ratio": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "formal_connective_rate": [
+    -0.230002,
+    -0.013591,
+    0.243593
+   ],
+   "casual_connective_rate": [
+    0.165588,
+    -0.093705,
+    -0.071883
+   ],
+   "hedge_rate": [
+    0.096853,
+    0.131267,
+    -0.22812
+   ],
+   "booster_rate": [
+    -0.142719,
+    -0.031234,
+    0.173953
+   ],
+   "template_phrase_rate": [
+    -0.122594,
+    0.075914,
+    0.04668
+   ],
+   "corporate_filler_rate": [
+    -0.017148,
+    -0.046326,
+    0.063473
+   ],
+   "first_person_rate": [
+    0.044648,
+    0.064008,
+    -0.108656
+   ],
+   "second_person_rate": [
+    -0.185434,
+    -0.048804,
+    0.234238
+   ],
+   "tricolon_rate": [
+    -0.019529,
+    -0.147613,
+    0.167141
+   ],
+   "exclamation_rate": [
+    -0.262086,
+    -0.040752,
+    0.302838
+   ],
+   "question_rate": [
+    0.132429,
+    -0.095838,
+    -0.036592
+   ],
+   "em_dash_rate": [
+    0.052889,
+    0.050038,
+    -0.102927
+   ],
+   "semicolon_rate": [
+    -0.017487,
+    -0.037696,
+    0.055182
+   ],
+   "colon_rate": [
+    0.040809,
+    0.167424,
+    -0.208233
+   ],
+   "ellipsis_rate": [
+    0.004851,
+    0.0,
+    -0.004851
+   ],
+   "contraction_rate": [
+    0.002592,
+    0.005461,
+    -0.008053
+   ],
+   "digit_rate": [
+    0.115583,
+    -0.013535,
+    -0.102049
+   ],
+   "proper_noun_rate": [
+    0.044326,
+    0.015847,
+    -0.060173
+   ],
+   "emoji_rate": [
+    0.004851,
+    0.0,
+    -0.004851
+   ],
+   "allcaps_rate": [
+    0.020686,
+    -0.070858,
+    0.050172
+   ],
+   "parenthetical_rate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "informality_noise": [
+    -0.103711,
+    0.095208,
+    0.008503
+   ],
+   "redundancy_gain": [
+    0.094048,
+    -0.146109,
+    0.052061
+   ],
+   "adjacent_sentence_overlap": [
+    0.061434,
+    0.025392,
+    -0.086826
+   ],
+   "syllables_per_word": [
+    -0.132831,
+    0.024775,
+    0.108057
+   ],
+   "readability": [
+    0.158774,
+    -0.0375,
+    -0.121273
+   ],
+   "uniform_paragraph_size": [
+    -0.172927,
+    0.235072,
+    -0.062145
+   ]
+  },
+  "bias": [
+   1.307824,
+   -0.680654,
+   0.02283
+  ],
+  "stats": {
+   "mean_sentence_len": {
+    "center": 12.327952,
+    "spread": 3.317372
+   },
+   "sentence_len_cv": {
+    "center": 0.487427,
+    "spread": 0.261388
+   },
+   "sentence_len_range": {
+    "center": 1.250267,
+    "spread": 0.740001
+   },
+   "short_sentence_ratio": {
+    "center": 0.282968,
+    "spread": 0.256149
+   },
+   "long_sentence_ratio": {
+    "center": 0.014146,
+    "spread": 0.056642
+   },
+   "length_step_regularity": {
+    "center": 0.400251,
+    "spread": 0.286948
+   },
+   "paragraph_len_cv": {
+    "center": 0.23865,
+    "spread": 0.428486
+   },
+   "mean_paragraph_sentences": {
+    "center": 4.095142,
+    "spread": 1.700351
+   },
+   "mattr": {
+    "center": 0.850965,
+    "spread": 0.050401
+   },
+   "hapax_ratio": {
+    "center": 0.859404,
+    "spread": 0.051956
+   },
+   "mean_word_len": {
+    "center": 4.81973,
+    "spread": 0.823044
+   },
+   "long_word_ratio": {
+    "center": 0.170238,
+    "spread": 0.112749
+   },
+   "function_word_ratio": {
+    "center": 0.471174,
+    "spread": 0.070382
+   },
+   "content_concentration": {
+    "center": 0.370518,
+    "spread": 0.137912
+   },
+   "repeated_bigram_ratio": {
+    "center": 0.022246,
+    "spread": 0.028784
+   },
+   "repeated_trigram_ratio": {
+    "center": 0.001661,
+    "spread": 0.007005
+   },
+   "content_load_variation": {
+    "center": 0.109031,
+    "spread": 0.045821
+   },
+   "commas_per_sentence": {
+    "center": 0.533114,
+    "spread": 0.358929
+   },
+   "subordinator_rate": {
+    "center": 1.180264,
+    "spread": 1.619731
+   },
+   "opening_diversity": {
+    "center": 0.938322,
+    "spread": 0.101792
+   },
+   "sentence_initial_connective_ratio": {
+    "center": 0.068258,
+    "spread": 0.146571
+   },
+   "paragraph_opening_symmetry": {
+    "center": 0.006566,
+    "spread": 0.063
+   },
+   "anaphoric_opener_rate": {
+    "center": 0.063791,
+    "spread": 0.110991
+   },
+   "list_marker_ratio": {
+    "center": 0.0,
+    "spread": 0.0525
+   },
+   "formal_connective_rate": {
+    "center": 0.384166,
+    "spread": 0.993273
+   },
+   "casual_connective_rate": {
+    "center": 1.116764,
+    "spread": 1.540875
+   },
+   "hedge_rate": {
+    "center": 0.392757,
+    "spread": 0.759566
+   },
+   "booster_rate": {
+    "center": 0.207043,
+    "spread": 0.571391
+   },
+   "template_phrase_rate": {
+    "center": 0.254644,
+    "spread": 0.816395
+   },
+   "corporate_filler_rate": {
+    "center": 0.172606,
+    "spread": 0.761517
+   },
+   "first_person_rate": {
+    "center": 4.033726,
+    "spread": 3.709896
+   },
+   "second_person_rate": {
+    "center": 1.92669,
+    "spread": 2.490915
+   },
+   "tricolon_rate": {
+    "center": 0.232219,
+    "spread": 0.565462
+   },
+   "exclamation_rate": {
+    "center": 0.312687,
+    "spread": 1.279859
+   },
+   "question_rate": {
+    "center": 0.389499,
+    "spread": 1.007581
+   },
+   "em_dash_rate": {
+    "center": 0.1194,
+    "spread": 0.44623
+   },
+   "semicolon_rate": {
+    "center": 0.055775,
+    "spread": 0.275671
+   },
+   "colon_rate": {
+    "center": 0.416532,
+    "spread": 0.968029
+   },
+   "ellipsis_rate": {
+    "center": 0.0,
+    "spread": 0.0875
+   },
+   "contraction_rate": {
+    "center": 1.215489,
+    "spread": 2.222261
+   },
+   "digit_rate": {
+    "center": 1.53877,
+    "spread": 2.764014
+   },
+   "proper_noun_rate": {
+    "center": 1.563296,
+    "spread": 2.417182
+   },
+   "emoji_rate": {
+    "center": 0.0,
+    "spread": 0.14
+   },
+   "allcaps_rate": {
+    "center": 0.224328,
+    "spread": 0.871098
+   },
+   "parenthetical_rate": {
+    "center": 0.0,
+    "spread": 0.1575
+   },
+   "informality_noise": {
+    "center": 1.619952,
+    "spread": 2.756113
+   },
+   "redundancy_gain": {
+    "center": 0.003968,
+    "spread": 0.01225
+   },
+   "adjacent_sentence_overlap": {
+    "center": 0.011858,
+    "spread": 0.023438
+   },
+   "syllables_per_word": {
+    "center": 1.571996,
+    "spread": 0.29728
+   },
+   "readability": {
+    "center": 0.6764,
+    "spread": 0.259914
+   },
+   "uniform_paragraph_size": {
+    "center": 0.051159,
+    "spread": 0.158619
+   }
+  },
+  "temperature": 1.1,
+  "meta": {}
+ },
+ "by_language": {
+  "nl": {
+   "classes": [
+    "human",
+    "mixed",
+    "ai"
+   ],
+   "feature_names": [
+    "mean_sentence_len",
+    "sentence_len_cv",
+    "sentence_len_range",
+    "short_sentence_ratio",
+    "long_sentence_ratio",
+    "length_step_regularity",
+    "paragraph_len_cv",
+    "mean_paragraph_sentences",
+    "mattr",
+    "hapax_ratio",
+    "mean_word_len",
+    "long_word_ratio",
+    "function_word_ratio",
+    "content_concentration",
+    "repeated_bigram_ratio",
+    "repeated_trigram_ratio",
+    "content_load_variation",
+    "commas_per_sentence",
+    "subordinator_rate",
+    "opening_diversity",
+    "sentence_initial_connective_ratio",
+    "paragraph_opening_symmetry",
+    "anaphoric_opener_rate",
+    "list_marker_ratio",
+    "formal_connective_rate",
+    "casual_connective_rate",
+    "hedge_rate",
+    "booster_rate",
+    "template_phrase_rate",
+    "corporate_filler_rate",
+    "first_person_rate",
+    "second_person_rate",
+    "tricolon_rate",
+    "exclamation_rate",
+    "question_rate",
+    "em_dash_rate",
+    "semicolon_rate",
+    "colon_rate",
+    "ellipsis_rate",
+    "contraction_rate",
+    "digit_rate",
+    "proper_noun_rate",
+    "emoji_rate",
+    "allcaps_rate",
+    "parenthetical_rate",
+    "informality_noise",
+    "redundancy_gain",
+    "adjacent_sentence_overlap",
+    "syllables_per_word",
+    "readability",
+    "uniform_paragraph_size"
+   ],
+   "weights": {
+    "mean_sentence_len": [
+     0.091096,
+     -0.016556,
+     -0.07454
+    ],
+    "sentence_len_cv": [
+     -0.02246,
+     -0.04708,
+     0.06954
+    ],
+    "sentence_len_range": [
+     0.065189,
+     -0.101364,
+     0.036175
+    ],
+    "short_sentence_ratio": [
+     -0.026583,
+     0.001173,
+     0.025411
+    ],
+    "long_sentence_ratio": [
+     0.05645,
+     -0.081461,
+     0.025011
+    ],
+    "length_step_regularity": [
+     0.108521,
+     -0.063521,
+     -0.045
+    ],
+    "paragraph_len_cv": [
+     0.045261,
+     0.008168,
+     -0.053429
+    ],
+    "mean_paragraph_sentences": [
+     0.011518,
+     -0.079518,
+     0.068
+    ],
+    "mattr": [
+     0.079014,
+     -0.044786,
+     -0.034229
+    ],
+    "hapax_ratio": [
+     -0.07794,
+     0.054967,
+     0.022972
+    ],
+    "mean_word_len": [
+     -0.163821,
+     0.067341,
+     0.096481
+    ],
+    "long_word_ratio": [
+     -0.15834,
+     0.017621,
+     0.140719
+    ],
+    "function_word_ratio": [
+     0.101933,
+     -0.026054,
+     -0.075879
+    ],
+    "content_concentration": [
+     0.15266,
+     -0.043505,
+     -0.109155
+    ],
+    "repeated_bigram_ratio": [
+     0.013063,
+     0.078917,
+     -0.09198
+    ],
+    "repeated_trigram_ratio": [
+     0.100108,
+     -0.058376,
+     -0.041732
+    ],
+    "content_load_variation": [
+     -0.123277,
+     0.056529,
+     0.066748
+    ],
+    "commas_per_sentence": [
+     0.044876,
+     0.041858,
+     -0.086733
+    ],
+    "subordinator_rate": [
+     -0.118625,
+     0.024665,
+     0.09396
+    ],
+    "opening_diversity": [
+     -0.203109,
+     0.179106,
+     0.024003
+    ],
+    "sentence_initial_connective_ratio": [
+     -0.153367,
+     -0.035207,
+     0.188574
+    ],
+    "paragraph_opening_symmetry": [
+     0.033478,
+     -0.009299,
+     -0.024179
+    ],
+    "anaphoric_opener_rate": [
+     -0.030972,
+     0.050403,
+     -0.019432
+    ],
+    "list_marker_ratio": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "formal_connective_rate": [
+     -0.252248,
+     -0.025135,
+     0.277382
+    ],
+    "casual_connective_rate": [
+     0.137126,
+     -0.055043,
+     -0.082082
+    ],
+    "hedge_rate": [
+     0.154853,
+     0.072098,
+     -0.226951
+    ],
+    "booster_rate": [
+     -0.052413,
+     -0.03061,
+     0.083023
+    ],
+    "template_phrase_rate": [
+     -0.203568,
+     0.12971,
+     0.073858
+    ],
+    "corporate_filler_rate": [
+     -0.010807,
+     -0.024571,
+     0.035378
+    ],
+    "first_person_rate": [
+     0.053532,
+     0.022488,
+     -0.07602
+    ],
+    "second_person_rate": [
+     -0.155523,
+     -0.041367,
+     0.19689
+    ],
+    "tricolon_rate": [
+     -0.02545,
+     -0.106437,
+     0.131887
+    ],
+    "exclamation_rate": [
+     -0.181153,
+     -0.038708,
+     0.219862
+    ],
+    "question_rate": [
+     0.084476,
+     -0.067935,
+     -0.016541
+    ],
+    "em_dash_rate": [
+     -0.001533,
+     0.0,
+     0.001533
+    ],
+    "semicolon_rate": [
+     -0.001533,
+     0.0,
+     0.001533
+    ],
+    "colon_rate": [
+     -0.000858,
+     0.204874,
+     -0.204016
+    ],
+    "ellipsis_rate": [
+     0.001533,
+     0.0,
+     -0.001533
+    ],
+    "contraction_rate": [
+     0.009015,
+     0.006064,
+     -0.015079
+    ],
+    "digit_rate": [
+     0.092946,
+     -0.034457,
+     -0.058488
+    ],
+    "proper_noun_rate": [
+     0.128472,
+     -0.008325,
+     -0.120147
+    ],
+    "emoji_rate": [
+     0.001533,
+     0.0,
+     -0.001533
+    ],
+    "allcaps_rate": [
+     -0.037512,
+     -0.019435,
+     0.056947
+    ],
+    "parenthetical_rate": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "informality_noise": [
+     -0.148891,
+     0.090108,
+     0.058783
+    ],
+    "redundancy_gain": [
+     0.175537,
+     -0.163901,
+     -0.011636
+    ],
+    "adjacent_sentence_overlap": [
+     0.083547,
+     -0.029025,
+     -0.054522
+    ],
+    "syllables_per_word": [
+     -0.129487,
+     0.025164,
+     0.104322
+    ],
+    "readability": [
+     0.113998,
+     -0.02111,
+     -0.092888
+    ],
+    "uniform_paragraph_size": [
+     -0.210102,
+     0.188727,
+     0.021375
+    ]
+   },
+   "bias": [
+    1.357999,
+    -0.749279,
+    0.04128
+   ],
+   "stats": {
+    "mean_sentence_len": {
+     "center": 12.556298,
+     "spread": 3.531626
+    },
+    "sentence_len_cv": {
+     "center": 0.473613,
+     "spread": 0.24809
+    },
+    "sentence_len_range": {
+     "center": 1.227097,
+     "spread": 0.724251
+    },
+    "short_sentence_ratio": {
+     "center": 0.265107,
+     "spread": 0.245159
+    },
+    "long_sentence_ratio": {
+     "center": 0.019524,
+     "spread": 0.071621
+    },
+    "length_step_regularity": {
+     "center": 0.389623,
+     "spread": 0.284587
+    },
+    "paragraph_len_cv": {
+     "center": 0.246445,
+     "spread": 0.433054
+    },
+    "mean_paragraph_sentences": {
+     "center": 4.157714,
+     "spread": 1.787098
+    },
+    "mattr": {
+     "center": 0.844872,
+     "spread": 0.050167
+    },
+    "hapax_ratio": {
+     "center": 0.851364,
+     "spread": 0.053785
+    },
+    "mean_word_len": {
+     "center": 4.871847,
+     "spread": 0.836017
+    },
+    "long_word_ratio": {
+     "center": 0.176326,
+     "spread": 0.112756
+    },
+    "function_word_ratio": {
+     "center": 0.487909,
+     "spread": 0.063415
+    },
+    "content_concentration": {
+     "center": 0.362579,
+     "spread": 0.115337
+    },
+    "repeated_bigram_ratio": {
+     "center": 0.019437,
+     "spread": 0.025137
+    },
+    "repeated_trigram_ratio": {
+     "center": 0.001351,
+     "spread": 0.007
+    },
+    "content_load_variation": {
+     "center": 0.111537,
+     "spread": 0.048484
+    },
+    "commas_per_sentence": {
+     "center": 0.473369,
+     "spread": 0.337616
+    },
+    "subordinator_rate": {
+     "center": 0.942087,
+     "spread": 1.207812
+    },
+    "opening_diversity": {
+     "center": 0.945591,
+     "spread": 0.090865
+    },
+    "sentence_initial_connective_ratio": {
+     "center": 0.079,
+     "spread": 0.168588
+    },
+    "paragraph_opening_symmetry": {
+     "center": 0.004,
+     "spread": 0.063
+    },
+    "anaphoric_opener_rate": {
+     "center": 0.054274,
+     "spread": 0.100912
+    },
+    "list_marker_ratio": {
+     "center": 0.0,
+     "spread": 0.0525
+    },
+    "formal_connective_rate": {
+     "center": 0.616322,
+     "spread": 1.266742
+    },
+    "casual_connective_rate": {
+     "center": 0.964004,
+     "spread": 1.512364
+    },
+    "hedge_rate": {
+     "center": 0.38535,
+     "spread": 0.756609
+    },
+    "booster_rate": {
+     "center": 0.171918,
+     "spread": 0.554348
+    },
+    "template_phrase_rate": {
+     "center": 0.154161,
+     "spread": 0.424954
+    },
+    "corporate_filler_rate": {
+     "center": 0.14938,
+     "spread": 0.653373
+    },
+    "first_person_rate": {
+     "center": 4.294947,
+     "spread": 3.766092
+    },
+    "second_person_rate": {
+     "center": 2.249565,
+     "spread": 2.743622
+    },
+    "tricolon_rate": {
+     "center": 0.245684,
+     "spread": 0.581843
+    },
+    "exclamation_rate": {
+     "center": 0.329893,
+     "spread": 1.280785
+    },
+    "question_rate": {
+     "center": 0.460378,
+     "spread": 1.090563
+    },
+    "em_dash_rate": {
+     "center": 0.0,
+     "spread": 0.14
+    },
+    "semicolon_rate": {
+     "center": 0.0,
+     "spread": 0.0875
+    },
+    "colon_rate": {
+     "center": 0.37844,
+     "spread": 0.809922
+    },
+    "ellipsis_rate": {
+     "center": 0.0,
+     "spread": 0.0875
+    },
+    "contraction_rate": {
+     "center": 0.345118,
+     "spread": 0.73413
+    },
+    "digit_rate": {
+     "center": 1.371201,
+     "spread": 2.284789
+    },
+    "proper_noun_rate": {
+     "center": 1.259459,
+     "spread": 1.762407
+    },
+    "emoji_rate": {
+     "center": 0.0,
+     "spread": 0.14
+    },
+    "allcaps_rate": {
+     "center": 0.055556,
+     "spread": 0.392837
+    },
+    "parenthetical_rate": {
+     "center": 0.0,
+     "spread": 0.1575
+    },
+    "informality_noise": {
+     "center": 1.293019,
+     "spread": 2.210825
+    },
+    "redundancy_gain": {
+     "center": 0.002765,
+     "spread": 0.012391
+    },
+    "adjacent_sentence_overlap": {
+     "center": 0.010934,
+     "spread": 0.023264
+    },
+    "syllables_per_word": {
+     "center": 1.574267,
+     "spread": 0.284933
+    },
+    "readability": {
+     "center": 0.734816,
+     "spread": 0.225806
+    },
+    "uniform_paragraph_size": {
+     "center": 0.039506,
+     "spread": 0.140376
+    }
+   },
+   "temperature": 1.1,
+   "meta": {}
+  },
+  "en": {
+   "classes": [
+    "human",
+    "mixed",
+    "ai"
+   ],
+   "feature_names": [
+    "mean_sentence_len",
+    "sentence_len_cv",
+    "sentence_len_range",
+    "short_sentence_ratio",
+    "long_sentence_ratio",
+    "length_step_regularity",
+    "paragraph_len_cv",
+    "mean_paragraph_sentences",
+    "mattr",
+    "hapax_ratio",
+    "mean_word_len",
+    "long_word_ratio",
+    "function_word_ratio",
+    "content_concentration",
+    "repeated_bigram_ratio",
+    "repeated_trigram_ratio",
+    "content_load_variation",
+    "commas_per_sentence",
+    "subordinator_rate",
+    "opening_diversity",
+    "sentence_initial_connective_ratio",
+    "paragraph_opening_symmetry",
+    "anaphoric_opener_rate",
+    "list_marker_ratio",
+    "formal_connective_rate",
+    "casual_connective_rate",
+    "hedge_rate",
+    "booster_rate",
+    "template_phrase_rate",
+    "corporate_filler_rate",
+    "first_person_rate",
+    "second_person_rate",
+    "tricolon_rate",
+    "exclamation_rate",
+    "question_rate",
+    "em_dash_rate",
+    "semicolon_rate",
+    "colon_rate",
+    "ellipsis_rate",
+    "contraction_rate",
+    "digit_rate",
+    "proper_noun_rate",
+    "emoji_rate",
+    "allcaps_rate",
+    "parenthetical_rate",
+    "informality_noise",
+    "redundancy_gain",
+    "adjacent_sentence_overlap",
+    "syllables_per_word",
+    "readability",
+    "uniform_paragraph_size"
+   ],
+   "weights": {
+    "mean_sentence_len": [
+     0.073002,
+     0.02989,
+     -0.102891
+    ],
+    "sentence_len_cv": [
+     -0.002341,
+     -0.033686,
+     0.036027
+    ],
+    "sentence_len_range": [
+     -0.007244,
+     -0.048676,
+     0.05592
+    ],
+    "short_sentence_ratio": [
+     0.034128,
+     -0.041526,
+     0.007397
+    ],
+    "long_sentence_ratio": [
+     0.033897,
+     -0.072417,
+     0.03852
+    ],
+    "length_step_regularity": [
+     -0.14824,
+     0.002348,
+     0.145891
+    ],
+    "paragraph_len_cv": [
+     -0.057583,
+     0.047592,
+     0.00999
+    ],
+    "mean_paragraph_sentences": [
+     -0.012781,
+     -0.100158,
+     0.112939
+    ],
+    "mattr": [
+     0.002101,
+     0.07511,
+     -0.077212
+    ],
+    "hapax_ratio": [
+     -0.100271,
+     0.043705,
+     0.056566
+    ],
+    "mean_word_len": [
+     -0.147627,
+     0.00908,
+     0.138547
+    ],
+    "long_word_ratio": [
+     -0.203445,
+     0.018911,
+     0.184535
+    ],
+    "function_word_ratio": [
+     -0.024241,
+     0.05168,
+     -0.027439
+    ],
+    "content_concentration": [
+     0.179604,
+     -0.110056,
+     -0.069549
+    ],
+    "repeated_bigram_ratio": [
+     0.019373,
+     0.024353,
+     -0.043726
+    ],
+    "repeated_trigram_ratio": [
+     0.16883,
+     -0.157088,
+     -0.011742
+    ],
+    "content_load_variation": [
+     -0.151957,
+     0.061536,
+     0.090421
+    ],
+    "commas_per_sentence": [
+     -0.016736,
+     -0.026894,
+     0.04363
+    ],
+    "subordinator_rate": [
+     0.168148,
+     -0.105357,
+     -0.062791
+    ],
+    "opening_diversity": [
+     -0.071127,
+     -0.022514,
+     0.093641
+    ],
+    "sentence_initial_connective_ratio": [
+     -0.13367,
+     -0.000194,
+     0.133864
+    ],
+    "paragraph_opening_symmetry": [
+     -0.157161,
+     0.110853,
+     0.046308
+    ],
+    "anaphoric_opener_rate": [
+     -0.105947,
+     0.063233,
+     0.042714
+    ],
+    "list_marker_ratio": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "formal_connective_rate": [
+     -0.055857,
+     -0.059793,
+     0.11565
+    ],
+    "casual_connective_rate": [
+     0.139339,
+     -0.11288,
+     -0.026459
+    ],
+    "hedge_rate": [
+     0.03711,
+     0.126459,
+     -0.163569
+    ],
+    "booster_rate": [
+     -0.172567,
+     -0.034905,
+     0.207472
+    ],
+    "template_phrase_rate": [
+     -0.062006,
+     0.034934,
+     0.027073
+    ],
+    "corporate_filler_rate": [
+     -0.015644,
+     -0.042426,
+     0.058071
+    ],
+    "first_person_rate": [
+     0.033122,
+     0.076213,
+     -0.109336
+    ],
+    "second_person_rate": [
+     -0.199809,
+     -0.021405,
+     0.221214
+    ],
+    "tricolon_rate": [
+     -0.038287,
+     -0.100442,
+     0.138729
+    ],
+    "exclamation_rate": [
+     -0.224505,
+     -0.034992,
+     0.259498
+    ],
+    "question_rate": [
+     0.069121,
+     -0.06024,
+     -0.008881
+    ],
+    "em_dash_rate": [
+     0.075634,
+     0.067956,
+     -0.143589
+    ],
+    "semicolon_rate": [
+     0.078758,
+     -0.085988,
+     0.00723
+    ],
+    "colon_rate": [
+     0.069602,
+     0.072886,
+     -0.142488
+    ],
+    "ellipsis_rate": [
+     0.001533,
+     0.0,
+     -0.001533
+    ],
+    "contraction_rate": [
+     0.048019,
+     -0.008865,
+     -0.039153
+    ],
+    "digit_rate": [
+     0.125178,
+     -0.018255,
+     -0.106923
+    ],
+    "proper_noun_rate": [
+     -0.006711,
+     0.031102,
+     -0.024392
+    ],
+    "emoji_rate": [
+     0.001533,
+     0.0,
+     -0.001533
+    ],
+    "allcaps_rate": [
+     0.065097,
+     -0.086342,
+     0.021245
+    ],
+    "parenthetical_rate": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "informality_noise": [
+     -0.019558,
+     0.066854,
+     -0.047296
+    ],
+    "redundancy_gain": [
+     0.011543,
+     -0.086051,
+     0.074508
+    ],
+    "adjacent_sentence_overlap": [
+     0.043333,
+     0.070373,
+     -0.113706
+    ],
+    "syllables_per_word": [
+     -0.155313,
+     0.039243,
+     0.11607
+    ],
+    "readability": [
+     0.137324,
+     -0.040131,
+     -0.097193
+    ],
+    "uniform_paragraph_size": [
+     -0.074978,
+     0.224699,
+     -0.149722
+    ]
+   },
+   "bias": [
+    1.251827,
+    -0.632503,
+    0.030676
+   ],
+   "stats": {
+    "mean_sentence_len": {
+     "center": 12.094947,
+     "spread": 3.102659
+    },
+    "sentence_len_cv": {
+     "center": 0.501524,
+     "spread": 0.276155
+    },
+    "sentence_len_range": {
+     "center": 1.273909,
+     "spread": 0.762511
+    },
+    "short_sentence_ratio": {
+     "center": 0.301193,
+     "spread": 0.268202
+    },
+    "long_sentence_ratio": {
+     "center": 0.008658,
+     "spread": 0.035399
+    },
+    "length_step_regularity": {
+     "center": 0.411096,
+     "spread": 0.291881
+    },
+    "paragraph_len_cv": {
+     "center": 0.230697,
+     "spread": 0.428112
+    },
+    "mean_paragraph_sentences": {
+     "center": 4.031293,
+     "spread": 1.623071
+    },
+    "mattr": {
+     "center": 0.857182,
+     "spread": 0.050388
+    },
+    "hapax_ratio": {
+     "center": 0.867609,
+     "spread": 0.049216
+    },
+    "mean_word_len": {
+     "center": 4.766549,
+     "spread": 0.814755
+    },
+    "long_word_ratio": {
+     "center": 0.164026,
+     "spread": 0.113567
+    },
+    "function_word_ratio": {
+     "center": 0.454097,
+     "spread": 0.073613
+    },
+    "content_concentration": {
+     "center": 0.378618,
+     "spread": 0.158491
+    },
+    "repeated_bigram_ratio": {
+     "center": 0.025112,
+     "spread": 0.032093
+    },
+    "repeated_trigram_ratio": {
+     "center": 0.001977,
+     "spread": 0.007152
+    },
+    "content_load_variation": {
+     "center": 0.106474,
+     "spread": 0.043287
+    },
+    "commas_per_sentence": {
+     "center": 0.594079,
+     "spread": 0.373038
+    },
+    "subordinator_rate": {
+     "center": 1.423301,
+     "spread": 1.935918
+    },
+    "opening_diversity": {
+     "center": 0.930905,
+     "spread": 0.112317
+    },
+    "sentence_initial_connective_ratio": {
+     "center": 0.057297,
+     "spread": 0.120848
+    },
+    "paragraph_opening_symmetry": {
+     "center": 0.009184,
+     "spread": 0.063
+    },
+    "anaphoric_opener_rate": {
+     "center": 0.073503,
+     "spread": 0.120686
+    },
+    "list_marker_ratio": {
+     "center": 0.0,
+     "spread": 0.0525
+    },
+    "formal_connective_rate": {
+     "center": 0.147272,
+     "spread": 0.512635
+    },
+    "casual_connective_rate": {
+     "center": 1.272641,
+     "spread": 1.569557
+    },
+    "hedge_rate": {
+     "center": 0.400315,
+     "spread": 0.770338
+    },
+    "booster_rate": {
+     "center": 0.242885,
+     "spread": 0.591844
+    },
+    "template_phrase_rate": {
+     "center": 0.357178,
+     "spread": 1.07479
+    },
+    "corporate_filler_rate": {
+     "center": 0.196306,
+     "spread": 0.864323
+    },
+    "first_person_rate": {
+     "center": 3.767175,
+     "spread": 3.671182
+    },
+    "second_person_rate": {
+     "center": 1.597226,
+     "spread": 2.182696
+    },
+    "tricolon_rate": {
+     "center": 0.218479,
+     "spread": 0.553933
+    },
+    "exclamation_rate": {
+     "center": 0.29513,
+     "spread": 1.291943
+    },
+    "question_rate": {
+     "center": 0.317174,
+     "spread": 0.920903
+    },
+    "em_dash_rate": {
+     "center": 0.241236,
+     "spread": 0.613625
+    },
+    "semicolon_rate": {
+     "center": 0.112688,
+     "spread": 0.385498
+    },
+    "colon_rate": {
+     "center": 0.455401,
+     "spread": 1.113782
+    },
+    "ellipsis_rate": {
+     "center": 0.0,
+     "spread": 0.0875
+    },
+    "contraction_rate": {
+     "center": 2.103622,
+     "spread": 2.817474
+    },
+    "digit_rate": {
+     "center": 1.709759,
+     "spread": 3.195271
+    },
+    "proper_noun_rate": {
+     "center": 1.873334,
+     "spread": 2.926415
+    },
+    "emoji_rate": {
+     "center": 0.0,
+     "spread": 0.14
+    },
+    "allcaps_rate": {
+     "center": 0.396544,
+     "spread": 1.154018
+    },
+    "parenthetical_rate": {
+     "center": 0.0,
+     "spread": 0.1575
+    },
+    "informality_noise": {
+     "center": 1.953557,
+     "spread": 3.208474
+    },
+    "redundancy_gain": {
+     "center": 0.005197,
+     "spread": 0.01225
+    },
+    "adjacent_sentence_overlap": {
+     "center": 0.0128,
+     "spread": 0.023817
+    },
+    "syllables_per_word": {
+     "center": 1.569678,
+     "spread": 0.31232
+    },
+    "readability": {
+     "center": 0.616792,
+     "spread": 0.280522
+    },
+    "uniform_paragraph_size": {
+     "center": 0.06305,
+     "spread": 0.175972
+    }
+   },
+   "temperature": 1.1,
+   "meta": {}
+  }
+ },
+ "policy": {
+  "likely_ai": 0.7,
+  "mostly_ai": 0.55,
+  "likely_human": 0.72,
+  "mostly_human": 0.52,
+  "mixed_floor": 0.34,
+  "min_words_any_call": 40,
+  "min_words_strong_call": 120
+ },
+ "meta": {
+  "trained": true,
+  "n_train": 99,
+  "n_dev": 30,
+  "epochs": 500,
+  "l2": 0.12,
+  "human_weight": 2.0,
+  "target_fpr": 0.01,
+  "corpus": "HumanBench-NL/EN seed"
+ }
+}

@@ -114,9 +114,13 @@ class Detector:
             segments = self._segment_scores(text, lang, model)
             mixed_summary = summarize_mixed(segments)
             # A text whose spans disagree strongly is mixed authorship even if
-            # the document-level model split the difference.
-            if mixed_summary.get("disagreement", 0.0) > 0.30 and label in (
-                AuthorshipClass.MOSTLY_HUMAN, AuthorshipClass.MOSTLY_AI,
+            # the document-level model split the difference.  This needs at
+            # least three windows to mean anything — two windows disagreeing
+            # is just short-text noise.
+            if (
+                mixed_summary.get("segment_count", 0) >= 3
+                and mixed_summary.get("disagreement", 0.0) > 0.35
+                and label in (AuthorshipClass.MOSTLY_HUMAN, AuthorshipClass.MOSTLY_AI)
             ):
                 label = AuthorshipClass.MIXED
 
