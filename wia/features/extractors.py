@@ -300,6 +300,23 @@ def second_person_rate(d: Doc) -> float:
     return d.rate(sum(1 for w in d.words if w in sp))
 
 
+@feature("formal_register_rate", "discourse",
+         "Salutations, closings and officialese per 100 words. Reported and "
+         "used to estimate formality, but never used as authorship evidence.",
+         0.35, 0.55, direction=None, authorship_evidence=False)
+def formal_register_rate(d: Doc) -> float:
+    return d.rate(d.phrase_count(LX.get(LX.FORMAL_REGISTER, d.language)))
+
+
+@feature("casual_register_rate", "discourse",
+         "Greetings, fillers and informal shorthand per 100 words. Reported "
+         "and used to estimate formality, but never used as authorship "
+         "evidence — register is genre, not provenance.",
+         0.45, 0.70, direction=None, authorship_evidence=False)
+def casual_register_rate(d: Doc) -> float:
+    return d.rate(d.phrase_count(LX.get(LX.CASUAL_REGISTER, d.language)))
+
+
 @feature("tricolon_rate", "discourse",
          "Three-item lists inside a sentence (X, Y and Z) per 100 words.",
          0.35, 0.40, direction="ai")

@@ -14,6 +14,7 @@ from typing import Any, Dict, List, Optional
 import re
 
 from wia.features import Doc, extract
+from wia.features.derived import estimate_formality, formality_label
 from wia.features.lexicons import CORPORATE_FILLER, FORMAL_CONNECTIVES, get as lex_get
 from wia.humanizer.critics import naturalness
 from wia.humanizer.style_dna import StyleProfile, extract_style
@@ -157,18 +158,8 @@ def analyze(text: str, language: str = "auto", *, with_detection: bool = True) -
 
 
 def _formality(f: Dict[str, float]) -> Dict[str, Any]:
-    score = 3.0
-    score += 1.4 * min(1.0, max(0.0, (f["long_word_ratio"] - 0.15) / 0.12))
-    score += 0.8 * min(1.0, f["formal_connective_rate"] / 1.5)
-    score -= 1.2 * min(1.0, f["contraction_rate"] / 2.0)
-    score -= 0.8 * min(1.0, f["exclamation_rate"] / 1.0)
-    score -= 0.5 * min(1.0, f["first_person_rate"] / 3.0)
-    level = int(max(1, min(6, round(score))))
-    return {
-        "level": level,
-        "label": {1: "very casual", 2: "conversational", 3: "neutral",
-                  4: "professional", 5: "formal", 6: "academic"}[level],
-    }
+    level = estimate_formality(f)
+    return {"level": level, "label": formality_label(level)}
 
 
 def _top_content_words(doc: Doc, limit: int = 8) -> List[Dict[str, Any]]:

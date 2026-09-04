@@ -19,15 +19,17 @@ LONG = (
 def test_health_exposes_what_is_loaded():
     body = client.get("/health").json()
     assert body["status"] == "ok"
-    assert body["detector"]["features"] > 40
+    assert body["detector"]["features_measured"] > 40
+    assert body["detector"]["features_used_as_evidence"] < body["detector"]["features_measured"]
     assert body["detector"]["trained"] is True
     assert "disclaimer" in body
 
 
 def test_detect_returns_a_distribution_and_a_disclaimer():
     body = client.post("/detect", json={"text": LONG}).json()
+    # The payload rounds to four decimals, so the sum is 1 to within rounding.
     assert abs(sum((body["human_probability"], body["mixed_probability"],
-                    body["ai_probability"])) - 1.0) < 1e-6
+                    body["ai_probability"])) - 1.0) < 1e-3
     assert body["disclaimer"]
     assert body["language"] == "en"
 
@@ -79,6 +81,7 @@ def test_features_endpoint_publishes_the_measurements():
     body = client.get("/features").json()
     assert len(body["features"]) > 40
     assert all(f["description"] for f in body["features"])
+    assert any(f["used_as_authorship_evidence"] is False for f in body["features"])
     assert len(body["operations"]) > 20
 
 

@@ -123,6 +123,40 @@ SECOND_PERSON: Dict[str, FrozenSet[str]] = {
     "nl": frozenset({"je", "jij", "jouw", "jullie", "u", "uw", "jezelf"}),
 }
 
+# Register markers: salutations, closings and officialese. These say more
+# about how formal a text is than word length does — "geachte" and "hierbij"
+# are decisive where "organisatieverandering" only means Dutch compounds words.
+FORMAL_REGISTER: Dict[str, FrozenSet[str]] = {
+    "en": frozenset({
+        "dear sir", "dear madam", "yours sincerely", "yours faithfully",
+        "further to", "pursuant to", "hereby", "herewith", "kindly",
+        "please find attached", "we would be grateful", "should you require",
+        "do not hesitate", "at your earliest convenience", "with reference to",
+        "shall", "thereof", "herein", "aforementioned", "whom",
+    }),
+    "nl": frozenset({
+        "geachte", "hoogachtend", "met vriendelijke groet", "hierbij",
+        "hierdoor", "naar aanleiding van", "middels", "derhalve", "conform",
+        "gaarne", "verzoeke", "bij voorbaat dank", "in afwachting van",
+        "wij verzoeken u", "u gelieve", "onverminderd", "krachtens",
+        "dient", "dienen", "zijnde", "aangaande",
+    }),
+}
+
+CASUAL_REGISTER: Dict[str, FrozenSet[str]] = {
+    "en": frozenset({
+        "hey", "hi there", "yo", "cheers", "thanks!", "lol", "haha", "btw",
+        "gonna", "wanna", "kinda", "yeah", "nope", "ok", "okay", "no worries",
+        "shout", "chuck", "stuff", "loads of", "a bit", "sorted",
+    }),
+    "nl": frozenset({
+        "hoi", "hey", "hallo", "joh", "nou", "hoor", "even", "effe", "ff",
+        "gewoon", "gezellig", "leuk", "top", "prima", "doei", "groetjes",
+        "sowieso", "best wel", "een beetje", "geen probleem", "laten we",
+    }),
+}
+
+
 # Subordinating conjunctions: syntactic depth without a parser.
 SUBORDINATORS: Dict[str, FrozenSet[str]] = {
     "en": frozenset({

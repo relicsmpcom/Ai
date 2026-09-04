@@ -449,6 +449,14 @@
     "center": 1.92669,
     "spread": 2.490915
    },
+   "formal_register_rate": {
+    "center": 0.203572,
+    "spread": 0.524403
+   },
+   "casual_register_rate": {
+    "center": 0.602458,
+    "spread": 1.419603
+   },
    "tricolon_rate": {
     "center": 0.232219,
     "spread": 0.565462
@@ -980,6 +988,14 @@
      "center": 2.249565,
      "spread": 2.743622
     },
+    "formal_register_rate": {
+     "center": 0.375676,
+     "spread": 0.671876
+    },
+    "casual_register_rate": {
+     "center": 0.905573,
+     "spread": 1.708273
+    },
     "tricolon_rate": {
      "center": 0.245684,
      "spread": 0.581843
@@ -1509,6 +1525,14 @@
     "second_person_rate": {
      "center": 1.597226,
      "spread": 2.182696
+    },
+    "formal_register_rate": {
+     "center": 0.027956,
+     "spread": 0.195695
+    },
+    "casual_register_rate": {
+     "center": 0.293158,
+     "spread": 0.970647
     },
     "tricolon_rate": {
      "center": 0.218479,

@@ -66,3 +66,33 @@ def test_features_are_not_merely_length_proxies():
     a, b = extract(single), extract(doubled)
     for name in ("mean_sentence_len", "mean_word_len", "function_word_ratio"):
         assert abs(a[name] - b[name]) < a[name] * 0.35 + 0.5, name
+
+
+def test_register_is_measured_but_never_votes_on_authorship():
+    """Register is genre, not provenance.
+
+    A model allowed to learn "formal ⇒ generated" accuses every non-native
+    writer who was taught to write formally, and every lawyer, and every
+    government department. These features are reported and feed the formality
+    estimate; the detector never sees them.
+    """
+    from wia.features import authorship_feature_names
+
+    evidence = set(authorship_feature_names())
+    assert "formal_register_rate" not in evidence
+    assert "casual_register_rate" not in evidence
+    assert len(evidence) == len(FEATURES) - 2
+    assert "sentence_len_cv" in evidence
+
+
+def test_formality_estimate_tracks_register_not_word_length():
+    from wia.features.derived import estimate_formality
+
+    formal = extract(Doc(
+        "Geachte mevrouw De Vries, naar aanleiding van ons gesprek stuur ik u "
+        "hierbij de gevraagde stukken. Met vriendelijke groet.", "nl"))
+    casual = extract(Doc(
+        "Hoi! Even snel: de meeting schuift naar vrijdag. Neem ik gewoon "
+        "koffie mee, prima toch?", "nl"))
+    assert estimate_formality(formal) >= 5
+    assert estimate_formality(casual) <= 2

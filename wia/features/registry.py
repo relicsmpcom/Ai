@@ -28,6 +28,12 @@ class Feature:
     center: float
     spread: float
     direction: Optional[str] = None  # "ai" | "human" | None
+    #: Whether the detector may use this measurement as evidence of authorship.
+    #: Some things are worth measuring and reporting but must never vote —
+    #: register is genre, not provenance, and a model allowed to learn
+    #: "formal ⇒ generated" will accuse every non-native writer who was taught
+    #: to write formally.
+    authorship_evidence: bool = True
 
     def value(self, d: Doc) -> float:
         try:
@@ -47,9 +53,10 @@ _BY_NAME: Dict[str, Feature] = {}
 
 
 def feature(name: str, group: str, doc: str, center: float, spread: float,
-            direction: Optional[str] = None):
+            direction: Optional[str] = None, authorship_evidence: bool = True):
     def deco(fn: Callable[[Doc], float]) -> Callable[[Doc], float]:
-        f = Feature(name, group, doc, fn, center, spread, direction)
+        f = Feature(name, group, doc, fn, center, spread, direction,
+                    authorship_evidence)
         FEATURES.append(f)
         _BY_NAME[name] = f
         return fn
@@ -63,6 +70,11 @@ def get_feature(name: str) -> Feature:
 
 def feature_names() -> List[str]:
     return [f.name for f in FEATURES]
+
+
+def authorship_feature_names() -> List[str]:
+    """The subset the detector is permitted to learn from."""
+    return [f.name for f in FEATURES if f.authorship_evidence]
 
 
 def extract(doc: Doc) -> Dict[str, float]:

@@ -10,14 +10,16 @@ feature can carry a verdict, and training is expected to replace them.
 from __future__ import annotations
 
 from wia.detector.model import LinearModel
-from wia.features.registry import FEATURES, feature_names
+from wia.features.registry import FEATURES, authorship_feature_names
 
 PRIOR_WEIGHT = 0.22
 
 
 def prior_model() -> LinearModel:
-    m = LinearModel(feature_names=feature_names())
+    m = LinearModel(feature_names=authorship_feature_names())
     for f in FEATURES:
+        if not f.authorship_evidence:
+            continue
         if f.direction == "ai":
             m.weights[f.name] = [-PRIOR_WEIGHT, 0.0, PRIOR_WEIGHT]
         elif f.direction == "human":

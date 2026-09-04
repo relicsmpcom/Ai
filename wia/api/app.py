@@ -33,7 +33,7 @@ from wia.detector import Detector
 from wia.humanizer import HumanizeOptions, Humanizer, StyleProfile, extract_style
 from wia.humanizer.modes import MODES
 from wia.humanizer.ops import OPS
-from wia.features import FEATURES
+from wia.features import FEATURES, authorship_feature_names
 from wia.meaning.guard import check as meaning_check
 
 WEB_DIR = Path(__file__).resolve().parent.parent / "web"
@@ -80,7 +80,8 @@ def health() -> Dict[str, Any]:
         "version": __version__,
         "detector": {
             "trained": bool(model.meta.get("trained")),
-            "features": len(FEATURES),
+            "features_measured": len(FEATURES),
+            "features_used_as_evidence": len(authorship_feature_names()),
             "languages": ["nl", "en"],
             "policy": detector().policy.to_dict(),
         },
@@ -175,7 +176,8 @@ def features() -> Dict[str, Any]:
     return {
         "features": [
             {"name": f.name, "group": f.group, "description": f.doc,
-             "tends_toward": f.direction}
+             "tends_toward": f.direction,
+             "used_as_authorship_evidence": f.authorship_evidence}
             for f in FEATURES
         ],
         "operations": [

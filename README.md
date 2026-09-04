@@ -49,10 +49,19 @@ only for `wia serve`; `pytest` only for the tests.
 
 ### 1. Detector
 
-51 named measurements — rhythm, lexis, syntax, discourse, orthography,
+53 named measurements — rhythm, lexis, syntax, discourse, orthography,
 statistics — feed a calibrated linear ensemble that reports three classes:
 human, mixed, AI. Everything it measures is published at `GET /features` and
 `wia features`; nothing about it is a secret.
+
+Two of the 53 are measured but **barred from voting**. Register markers
+("Geachte…", "Yours sincerely", "hey", "no worries") are strong signals of
+*genre*, and a model allowed to learn "formal ⇒ generated" accuses every
+non-native writer who was taught to write formally, along with every lawyer
+and every government department. They feed the formality estimate and the
+analyzer; the detector never sees them. This is not hypothetical — adding them
+as evidence made the detector accuse a hard-negative document, and the test
+suite caught it.
 
 Three things it does that most detectors do not:
 
@@ -127,7 +136,7 @@ applying to every figure:
 | | |
 | --- | --- |
 | False-positive rate (human called AI) | **0.000** |
-| Hard negatives wrongly accused | **0 / 24** |
+| Hard negatives wrongly accused (all 24, out of fold) | **0 / 24** |
 | ROC-AUC (AI vs rest) | 0.905 |
 | TPR @ 1% FPR | 0.354 |
 | TPR @ 5% FPR | 0.708 |
@@ -140,7 +149,7 @@ default for a system people point at other people's work, and it is a knob
 (`wia train --target-fpr`) rather than a law.
 
 Humanizer, over the same corpus: **151 / 151** rewrites preserve meaning, no
-grammar regressions, mean naturalness **+3.8** on generated text and **+0.1**
+grammar regressions, mean naturalness **+3.7** on generated text and **+0.1**
 on human text — it improves what is flat and leaves good writing alone.
 
 Full report: [`docs/EVALUATION.md`](docs/EVALUATION.md).
@@ -195,7 +204,7 @@ wia/
   api/         FastAPI service
   data/        the seed corpus + its data card
   web/         the single-file UI
-tests/         105 tests
+tests/         114 tests
 docs/          roadmap, roadmap status, architecture, evaluation
 ```
 

@@ -13,7 +13,7 @@
     │              │             │              │              │
     └──────────────┴──────┬──────┴──────────────┘              │
                           │                                    │
-                     features (51) ◀───────────────────────────┘
+                     features (53) ◀───────────────────────────┘
                           │
                  text · lang · lexicons
 ```
@@ -31,7 +31,7 @@ tests.
 text
  ├─ detect_language          function words + character n-grams; may decline
  ├─ classify_domain          10 genres — support macros are formulaic by design
- ├─ extract(Doc)             51 measurements
+ ├─ extract(Doc)             53 measurements (51 may vote)
  ├─ standardize              z-scores against trained stats (priors as fallback)
  ├─ model.predict            multinomial logistic → human / mixed / ai
  ├─ shrink_toward_human      short texts carry less evidence, and say so

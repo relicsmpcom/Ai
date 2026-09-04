@@ -252,7 +252,9 @@ def cmd_features(args: argparse.Namespace) -> int:
 
     if args.json:
         print(json.dumps([{"name": f.name, "group": f.group, "description": f.doc,
-                           "tends_toward": f.direction} for f in FEATURES], indent=2))
+                           "tends_toward": f.direction,
+                           "used_as_authorship_evidence": f.authorship_evidence}
+                          for f in FEATURES], indent=2))
         return 0
     group = ""
     for f in FEATURES:
@@ -260,7 +262,8 @@ def cmd_features(args: argparse.Namespace) -> int:
             group = f.group
             print(f"\n{group.upper()}")
         arrow = {"ai": "→ ai", "human": "→ human", None: ""}[f.direction]
-        print(f"  {f.name:34} {arrow:9} {f.doc}")
+        gate = "" if f.authorship_evidence else "  [measured only — never votes]"
+        print(f"  {f.name:34} {arrow:9} {f.doc}{gate}")
     print()
     return 0
 

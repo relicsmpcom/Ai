@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
 from wia.features import Doc, extract
+from wia.features.derived import estimate_formality
 from wia.humanizer.critics.grammar import grammar_delta
 from wia.humanizer.critics.naturalness import naturalness
 from wia.humanizer.options import HumanizeOptions
@@ -98,12 +99,11 @@ def _in_band(value: float, band: tuple) -> float:
 def _tone_score(features: Dict[str, float], options: HumanizeOptions) -> float:
     targets = _TONE_TARGETS.get(options.tone, {})
     scores = [_in_band(features.get(k, 0.0), band) for k, band in targets.items()]
-    # Formality is scored independently of tone.
-    formality_band = {
-        1: (0.0, 0.14), 2: (0.05, 0.18), 3: (0.10, 0.22),
-        4: (0.14, 0.26), 5: (0.18, 0.32), 6: (0.20, 0.40),
-    }[options.formality]
-    scores.append(_in_band(features.get("long_word_ratio", 0.16), formality_band))
+    # Formality is scored independently of tone, against the blended estimate
+    # rather than a single proxy: one step off is close enough, two steps is
+    # half credit, three is a miss.
+    distance = abs(estimate_formality(features) - options.formality)
+    scores.append(max(0.0, 1.0 - max(0, distance - 1) * 0.5))
     return 100.0 * (sum(scores) / len(scores) if scores else 1.0)
 
 

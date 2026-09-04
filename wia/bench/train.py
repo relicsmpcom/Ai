@@ -27,7 +27,7 @@ from wia.detector.model import CLASSES, LinearModel, train as train_linear
 from wia.detector.pipeline import WEIGHTS_PATH
 from wia.detector.priors import prior_model
 from wia.features.doc import Doc
-from wia.features.registry import FEATURES, extract, feature_names
+from wia.features.registry import FEATURES, authorship_feature_names, extract
 from wia.text.tokens import mean, stdev
 
 CLASS_INDEX = {c: i for i, c in enumerate(CLASSES)}
@@ -94,7 +94,7 @@ def _fit(
     X = [standardize_with(r, stats) for r in raw]
     y = [CLASS_INDEX[s.coarse] for s in samples]
     model = train_linear(
-        X, y, feature_names(),
+        X, y, authorship_feature_names(),
         epochs=epochs, l2=l2, seed=seed,
         class_weights=[human_weight, 1.0, 1.0],
         init=prior_model(),
