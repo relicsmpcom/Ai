@@ -1,10 +1,16 @@
 import json
 
 import pytest
-from fastapi.testclient import TestClient
 
-from wia.api import app
-from wia.cli import main
+# FastAPI is an optional extra — the engine itself needs nothing outside the
+# standard library. Without it, the API tests skip rather than failing
+# collection and taking the whole suite down with them.
+pytest.importorskip("fastapi", reason="install the 'api' extra to test the HTTP layer")
+
+from fastapi.testclient import TestClient  # noqa: E402
+
+from wia.api import app  # noqa: E402
+from wia.cli import main  # noqa: E402
 
 client = TestClient(app)
 

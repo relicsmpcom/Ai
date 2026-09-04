@@ -65,6 +65,8 @@ def test_detect_and_humanize_work_without_any_web_framework():
 
 
 def test_the_api_layer_adds_no_second_implementation():
+    # Pure source inspection — deliberately does not import FastAPI, so it
+    # still guards the contract on a minimal install.
     """Every FastAPI route body should delegate, not compute.
 
     If someone re-implements an endpoint in the API layer, the browser build

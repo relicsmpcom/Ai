@@ -26,7 +26,10 @@ jobs:
           python-version: "3.12"
 
       - name: Install
-        run: pip install -e ".[dev]"
+        # The API extra is needed for the test suite, not for the build: the
+        # browser bundle excludes wia/api entirely. Installing it here means
+        # the server path is still tested before anything is published.
+        run: pip install -e ".[api,dev]"
 
       # The browser build ships wia/detector/weights.json as-is, so a broken
       # model must not reach the public page.
