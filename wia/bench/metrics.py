@@ -89,7 +89,7 @@ def prf(
 
 def confusion(predicted: Sequence[str], actual: Sequence[str],
               classes: Sequence[str]) -> Dict[str, Dict[str, int]]:
-    m = {a: {p: 0 for p in classes} for a in classes}
+    m = {a: dict.fromkeys(classes, 0) for a in classes}
     for p, a in zip(predicted, actual):
         if a in m and p in m[a]:
             m[a][p] += 1

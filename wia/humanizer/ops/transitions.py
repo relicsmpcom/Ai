@@ -52,7 +52,7 @@ def vary_transitions(text: str, ctx: Context) -> str:
             re.IGNORECASE | re.MULTILINE,
         )
 
-        def replace(m: re.Match) -> str:
+        def replace(m: re.Match, alternatives: List[str] = alternatives) -> str:
             if not ctx.chance(0.85):
                 return m.group(0)
             options = alternatives or pool
@@ -68,10 +68,7 @@ def vary_transitions(text: str, ctx: Context) -> str:
             # Coordinating conjunctions open a sentence without a comma;
             # English adverbial connectives take one.  Dutch does not comma off
             # a fronted adverbial — "Bovendien, speelt…" is not Dutch.
-            if ctx.is_nl or choice.lower() in _CONJUNCTIONS:
-                tail = " "
-            else:
-                tail = ", "
+            tail = " " if (ctx.is_nl or choice.lower() in _CONJUNCTIONS) else ", "
             replacement = choice[0].upper() + choice[1:] if lead != " " else choice
             ctx.log("vary_transitions", m.group(2), choice,
                     "mechanical connective varied")

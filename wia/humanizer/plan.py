@@ -114,7 +114,7 @@ def build_plan(text: str, options: HumanizeOptions, language: str = "en") -> Pla
     if f["semicolon_rate"] > 0.25:
         want("reduce_semicolons")
     if f["repeated_bigram_ratio"] > 0.09:
-        want("reduce_repetition", "repeated phrasing")
+        want("flag_repetition", "repeated phrasing")
     if f["formal_connective_rate"] > 0.3:
         want("drop_empty_openers")
 

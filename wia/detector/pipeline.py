@@ -25,14 +25,13 @@ from wia.detector.calibration import DecisionPolicy, shrink_toward_human
 from wia.detector.domain import classify_domain
 from wia.detector.model import CLASSES, LinearModel
 from wia.detector.priors import prior_model
-from wia.detector.risk import RiskFactor, assess, dampen
+from wia.detector.risk import assess, dampen
 from wia.features.doc import Doc
-from wia.features.registry import FEATURES, extract, get_feature, standardize
+from wia.features.registry import extract, get_feature, standardize
 from wia.text.segment import windows
 from wia.lang import detect_language
 from wia.types import (
     AuthorshipClass,
-    Confidence,
     DetectionResult,
     Language,
     SegmentResult,
@@ -64,7 +63,7 @@ class Detector:
         import json
 
         blob = json.loads(p.read_text(encoding="utf-8"))
-        base = LinearModel.from_dict(blob["global"] if "global" in blob else blob)
+        base = LinearModel.from_dict(blob.get("global", blob))
         base.meta = {**base.meta, **(blob.get("meta") or {})}
         per_lang = {
             lang: LinearModel.from_dict(m)
@@ -164,6 +163,10 @@ class Detector:
             probs = dampen(probs, [f for f in assess(sdoc, raw) if f.key != "short_text"])
             total = sum(probs) or 1.0
             ph, pm, pa = [p / total for p in probs]
+            # Spans are shorter than the document floor by construction, so
+            # the floor is lifted here and honesty is carried by
+            # ``reliability`` instead: the UI weights spans by it, and no span
+            # label is ever reported as the document's verdict.
             label, conf = self.policy.decide(ph, pm, pa, max(sdoc.n_words, 40))
             out.append(
                 SegmentResult(

@@ -1,4 +1,3 @@
-import pytest
 
 from wia.analyze import analyze, compare
 from wia.humanizer import extract_style, style_match

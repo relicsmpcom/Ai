@@ -45,7 +45,7 @@ def _apply_map(text: str, mapping: Dict[str, object], ctx: Context, name: str,
         pattern = re.compile(
             _WORD_BOUNDARY.format(re.escape(source)) + tail, re.IGNORECASE)
 
-        def replace(m: re.Match) -> str:
+        def replace(m: re.Match, target: str = target) -> str:
             if not ctx.chance(probability):
                 return m.group(0)
             original = m.group(0)
@@ -99,30 +99,29 @@ def soften_boosters(text: str, ctx: Context) -> str:
                       probability)
 
 
-@op("reduce_repetition", "Vary a content word that repeats too often.",
+@op("flag_repetition", "Point out words the text leans on too heavily.",
     order=45, group="vocabulary")
-def reduce_repetition(text: str, ctx: Context) -> str:
-    """Flag-and-vary: only touches words repeated far above normal density.
+def flag_repetition(text: str, ctx: Context) -> str:
+    """Report heavy repetition instead of editing it.
 
-    There is no synonym dictionary here on purpose.  Swapping a repeated term
-    for a near-synonym is exactly how a rewrite quietly changes meaning, so
-    this operation removes *redundant repetitions inside one sentence* rather
-    than inventing alternatives.
+    There is no synonym dictionary here on purpose. Swapping a repeated term
+    for a near-synonym is one of the most reliable ways to change meaning
+    quietly — "the framework" and "the system" are not the same thing — so
+    this operation tells the writer what they are leaning on and leaves the
+    decision to them.
     """
-    from wia.text.segment import sentences as split_sentences
     from wia.text.tokens import words as tokenize
 
-    out = text
-    for seg in split_sentences(text):
-        toks = tokenize(seg.text)
-        if len(toks) < 12:
-            continue
-        counts: Dict[str, int] = {}
-        for t in toks:
-            if len(t) > 5 and t not in ctx.lex.get("simplify", {}):
-                counts[t] = counts.get(t, 0) + 1
-        repeated = [w for w, n in counts.items() if n >= 3]
-        for word in repeated:
-            ctx.log("reduce_repetition", word, word,
-                    f"“{word}” appears {counts[word]} times in one sentence")
-    return out
+    counts: Dict[str, int] = {}
+    for token in tokenize(text):
+        if len(token) > 5 and token not in ctx.lex.get("simplify", {}):
+            counts[token] = counts.get(token, 0) + 1
+    total = max(1, len(tokenize(text)))
+    heavy = sorted(
+        (w for w, n in counts.items() if n >= 3 and n / total > 0.012),
+        key=lambda w: -counts[w],
+    )[:4]
+    for word in heavy:
+        ctx.note(f"“{word}” appears {counts[word]} times — consider varying it "
+                 f"yourself where the meaning allows.")
+    return text

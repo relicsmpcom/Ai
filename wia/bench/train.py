@@ -22,8 +22,8 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 import wia.features.extractors  # noqa: F401
 from wia.bench.dataset import Dataset, Sample
-from wia.detector.calibration import DecisionPolicy, fit_temperature
-from wia.detector.model import CLASSES, LinearModel, softmax, train as train_linear
+from wia.detector.calibration import DecisionPolicy
+from wia.detector.model import CLASSES, LinearModel, train as train_linear
 from wia.detector.pipeline import WEIGHTS_PATH
 from wia.detector.priors import prior_model
 from wia.features.doc import Doc

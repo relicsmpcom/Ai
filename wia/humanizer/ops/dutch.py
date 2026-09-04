@@ -25,37 +25,17 @@ from typing import Optional
 #: High-frequency finite verbs that can occupy the V2 slot. The list is
 #: deliberately conservative: when the opening word is not on it, the sentence
 #: is assumed to be subject-first and is left alone.
-FINITE_VERBS = frozenset("""
-is zijn was waren wordt worden werd werden heeft hebben had hadden kan kunnen
-kon konden moet moeten moest moesten zal zullen zou zouden mag mogen wil willen
-wilde wilden gaat gaan ging gingen komt komen kwam kwamen staat staan stond
-doet doen deed blijft blijven bleef speelt spelen speelde ligt liggen lag geldt
-gelden gold biedt bieden bood maakt maken maakte vraagt vragen vroeg betekent
-betekenen zorgt zorgen zorgde helpt helpen hielp werkt werken werkte lijkt
-lijken leek blijkt blijken bleek hoort horen paste past valt vallen viel telt
-groeit groeide daalt daalde stijgt steeg verandert veranderde ontstaat ontstond
-bestaat bestaan bestond geeft geven gaf neemt nemen nam ziet zien zag weet
-weten wist zegt zeggen zei krijgt krijgen kreeg vindt vinden vond volgt volgen
-loopt lopen liep begint beginnen begon eindigt hangt draait richt houdt
-""".split())
+FINITE_VERBS = frozenset(["is", "zijn", "was", "waren", "wordt", "worden", "werd", "werden", "heeft", "hebben", "had", "hadden", "kan", "kunnen", "kon", "konden", "moet", "moeten", "moest", "moesten", "zal", "zullen", "zou", "zouden", "mag", "mogen", "wil", "willen", "wilde", "wilden", "gaat", "gaan", "ging", "gingen", "komt", "komen", "kwam", "kwamen", "staat", "staan", "stond", "doet", "doen", "deed", "blijft", "blijven", "bleef", "speelt", "spelen", "speelde", "ligt", "liggen", "lag", "geldt", "gelden", "gold", "biedt", "bieden", "bood", "maakt", "maken", "maakte", "vraagt", "vragen", "vroeg", "betekent", "betekenen", "zorgt", "zorgen", "zorgde", "helpt", "helpen", "hielp", "werkt", "werken", "werkte", "lijkt", "lijken", "leek", "blijkt", "blijken", "bleek", "hoort", "horen", "paste", "past", "valt", "vallen", "viel", "telt", "groeit", "groeide", "daalt", "daalde", "stijgt", "steeg", "verandert", "veranderde", "ontstaat", "ontstond", "bestaat", "bestaan", "bestond", "geeft", "geven", "gaf", "neemt", "nemen", "nam", "ziet", "zien", "zag", "weet", "weten", "wist", "zegt", "zeggen", "zei", "krijgt", "krijgen", "kreeg", "vindt", "vinden", "vond", "volgt", "volgen", "loopt", "lopen", "liep", "begint", "beginnen", "begon", "eindigt", "hangt", "draait", "richt", "houdt"])
 
 PRONOUNS = frozenset(
-    "het dit dat die deze er hij zij ze we wij ik je jij jullie u men "
-    "iedereen niemand iets alles".split())
+    ["het", "dit", "dat", "die", "deze", "er", "hij", "zij", "ze", "we", "wij", "ik", "je", "jij", "jullie", "u", "men", "iedereen", "niemand", "iets", "alles"])
 
 DETERMINERS = frozenset(
-    "de het een deze die dat dit mijn onze uw hun haar zijn geen alle elke "
-    "ieder beide sommige veel enkele meerdere ons".split())
+    ["de", "het", "een", "deze", "die", "dat", "dit", "mijn", "onze", "uw", "hun", "haar", "zijn", "geen", "alle", "elke", "ieder", "beide", "sommige", "veel", "enkele", "meerdere", "ons"])
 
 #: Words that cannot be (part of) the subject in the V2 slot: prepositions,
 #: adverbs and conjunctions.  Anything on this list ends the subject phrase.
-NON_SUBJECT = frozenset("""
-van in op met voor aan bij uit over door naar tot tussen onder boven binnen
-buiten tegen sinds tijdens zonder om na per vanaf volgens ondanks wegens
-ook niet altijd vaak nog al weer dan zo echt snel direct even juist toch
-wel eens nooit soms hier daar waar en maar want of dus omdat terwijl hoewel
-zodat indien als wanneer nadat voordat te
-""".split())
+NON_SUBJECT = frozenset(["van", "in", "op", "met", "voor", "aan", "bij", "uit", "over", "door", "naar", "tot", "tussen", "onder", "boven", "binnen", "buiten", "tegen", "sinds", "tijdens", "zonder", "om", "na", "per", "vanaf", "volgens", "ondanks", "wegens", "ook", "niet", "altijd", "vaak", "nog", "al", "weer", "dan", "zo", "echt", "snel", "direct", "even", "juist", "toch", "wel", "eens", "nooit", "soms", "hier", "daar", "waar", "en", "maar", "want", "of", "dus", "omdat", "terwijl", "hoewel", "zodat", "indien", "als", "wanneer", "nadat", "voordat", "te"])
 
 _TOKEN_RE = re.compile(r"\S+")
 

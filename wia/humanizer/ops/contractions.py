@@ -47,7 +47,7 @@ def apply_contractions(text: str, ctx: Context) -> str:
         if o.formality > 2:
             return text
         for pattern, replacement in NL_REDUCTIONS:
-            def sub(m: re.Match) -> str:
+            def sub(m: re.Match, replacement: str = replacement) -> str:
                 if not ctx.chance(rate * 0.4):
                     return m.group(0)
                 ctx.log("apply_contractions", m.group(0), replacement,
@@ -60,7 +60,7 @@ def apply_contractions(text: str, ctx: Context) -> str:
     for expansion, contraction in sorted(EN_CONTRACTIONS.items(), key=lambda kv: -len(kv[0])):
         pattern = re.compile(rf"(?<![\w'’]){re.escape(expansion)}(?![\w'’])", re.IGNORECASE)
 
-        def sub(m: re.Match) -> str:
+        def sub(m: re.Match, contraction: str = contraction) -> str:
             if not ctx.chance(rate):
                 return m.group(0)
             out = contraction
@@ -81,7 +81,7 @@ def expand_contractions(text: str, ctx: Context) -> str:
     for contraction, expansion in EN_EXPANSIONS.items():
         pattern = re.compile(rf"(?<![\w'’]){re.escape(contraction)}(?![\w'’])", re.IGNORECASE)
 
-        def sub(m: re.Match) -> str:
+        def sub(m: re.Match, expansion: str = expansion) -> str:
             out = expansion
             if m.group(0)[:1].isupper():
                 out = out[0].upper() + out[1:]

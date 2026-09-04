@@ -52,6 +52,7 @@ class Candidate:
     score: QualityScore
     changes: List[Dict[str, str]] = field(default_factory=list)
     operations: List[str] = field(default_factory=list)
+    notes: List[str] = field(default_factory=list)
     rejected_reason: str = ""
 
     @property
@@ -67,6 +68,7 @@ class Candidate:
             "rejected_reason": self.rejected_reason,
             "scores": self.score.to_dict(),
             "operations": self.operations,
+            "notes": self.notes,
             "changes": self.changes,
         }
 
@@ -177,6 +179,10 @@ class Humanizer:
             )
         if plan.findings:
             result.notes.append("Found: " + "; ".join(plan.findings) + ".")
+        for candidate in result.candidates:
+            for note in candidate.notes:
+                if note not in result.notes:
+                    result.notes.append(note)
         return result
 
     def _model_candidate(
@@ -237,16 +243,18 @@ class Humanizer:
             if retry_score.accepted:
                 return Candidate(label, description + " (repaired)", retry, retry_score,
                                  [c.to_dict() for c in retry_ctx.changes],
-                                 retry_ctx.used_ops())
+                                 retry_ctx.used_ops(), notes=list(retry_ctx.notes))
             return Candidate(
                 label, description, text, score,
                 [c.to_dict() for c in ctx.changes], ctx.used_ops(),
+                notes=list(ctx.notes),
                 rejected_reason=score.meaning["violations"][0]["detail"]
                 if score.meaning and score.meaning.get("violations") else "meaning changed",
             )
 
         return Candidate(label, description, rewritten, score,
-                         [c.to_dict() for c in ctx.changes], ctx.used_ops())
+                         [c.to_dict() for c in ctx.changes], ctx.used_ops(),
+                         notes=list(ctx.notes))
 
     def _run(
         self,

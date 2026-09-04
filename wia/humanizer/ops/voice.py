@@ -9,7 +9,7 @@ inventing experiences on their behalf.
 from __future__ import annotations
 
 import re
-from typing import Dict, Tuple
+from typing import Tuple
 
 from wia.humanizer.context import Context
 from wia.humanizer.ops.registry import op
@@ -50,7 +50,7 @@ def adjust_directness(text: str, ctx: Context) -> str:
     for pattern, softer, sharper in table:
         target = softer if mode in _SOFT else sharper
 
-        def sub(m: re.Match) -> str:
+        def sub(m: re.Match, target: str = target) -> str:
             if m.group(0).strip().lower() == target.strip().lower():
                 return m.group(0)
             if not ctx.chance(0.8):
@@ -99,7 +99,7 @@ def set_register(text: str, ctx: Context) -> str:
     for source, replacement in sorted(table.items(), key=lambda kv: -len(kv[0])):
         pattern = re.compile(rf"(?<![\w'’]){re.escape(source)}(?![\w'’])", re.IGNORECASE)
 
-        def sub(m: re.Match) -> str:
+        def sub(m: re.Match, replacement: str = replacement) -> str:
             out = replacement
             if m.group(0)[:1].isupper():
                 out = out[0].upper() + out[1:]

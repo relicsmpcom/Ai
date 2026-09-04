@@ -44,6 +44,7 @@ class Context:
     rng: random.Random = field(default_factory=lambda: random.Random(0))
     style: Optional[Any] = None
     changes: List[Change] = field(default_factory=list)
+    notes: List[str] = field(default_factory=list)
     intensity: float = 1.0  # candidate-level dial: A is gentler than C
     original: str = ""      # the untouched input, for repair decisions
     _protected: List[str] = field(default_factory=list)
@@ -55,6 +56,11 @@ class Context:
     def log(self, op: str, before: str, after: str, reason: str = "") -> None:
         if before != after:
             self.changes.append(Change(op, before, after, reason))
+
+    def note(self, message: str) -> None:
+        """Record something worth telling the user that is not an edit."""
+        if message not in self.notes:
+            self.notes.append(message)
 
     def used_ops(self) -> List[str]:
         seen: List[str] = []

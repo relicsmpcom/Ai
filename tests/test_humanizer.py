@@ -151,3 +151,30 @@ def test_whole_corpus_round_trip_preserves_meaning():
         if result.best() is None:
             failures.append(sample.id)
     assert not failures, f"no acceptable rewrite for: {failures}"
+
+
+def test_heavy_repetition_is_reported_not_silently_swapped(humanizer):
+    """Swapping a repeated term for a near-synonym changes meaning quietly."""
+    text = ("The framework is central to the framework strategy. Our framework enables teams to "
+            "use the framework effectively. The framework provides support for every framework "
+            "requirement across the organization.")
+    result = humanizer.humanize(text, HumanizeOptions())
+    assert any("framework" in note and "appears" in note for note in result.notes)
+    assert "framework" in result.best().text  # reported, not replaced
+
+
+def test_a_failing_operation_is_reported_rather_than_swallowed():
+    from wia.humanizer.context import Context
+    from wia.humanizer.ops.registry import OPS, Op, run_ops
+
+    def explode(text, ctx):
+        raise ValueError("boom")
+
+    OPS["_test_explode"] = Op("_test_explode", "Test.", explode, 10, "general")
+    try:
+        ctx = Context(options=HumanizeOptions(), language="en")
+        out = run_ops("Some text that survives.", ctx, ["_test_explode"])
+        assert out == "Some text that survives."
+        assert any("_test_explode" in note for note in ctx.notes)
+    finally:
+        OPS.pop("_test_explode", None)

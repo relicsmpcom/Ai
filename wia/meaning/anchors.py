@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Dict, List, Sequence, Set
+from typing import Dict, List, Set
 
 from wia.text.segment import sentences
 from wia.text.tokens import words
@@ -68,10 +68,10 @@ CERTAINTY: Dict[str, Dict[str, float]] = {
 
 _STOP_CAPS = {
     "de", "het", "een", "en", "of", "maar", "the", "a", "an", "and", "or", "but",
-    "in", "on", "at", "to", "for", "with", "van", "in", "op", "met", "voor",
-    "ik", "we", "wij", "je", "u", "i", "we", "you", "they", "he", "she", "it",
+    "in", "on", "at", "to", "for", "with", "van", "op", "met", "voor",
+    "ik", "we", "wij", "je", "u", "i", "you", "they", "he", "she", "it",
     "this", "that", "these", "those", "dit", "dat", "deze", "die", "er", "there",
-    "als", "if", "when", "wanneer", "na", "before", "voor", "onze", "our", "my",
+    "als", "if", "when", "wanneer", "na", "before", "onze", "our", "my",
     "mijn", "zijn", "haar", "his", "her", "their", "hun", "hi", "hallo", "hoi",
     "beste", "geachte", "dear", "sorry", "bedankt", "thanks", "thank",
     "wat", "what", "how", "hoe", "why", "waarom", "who", "wie", "which",

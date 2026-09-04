@@ -15,10 +15,10 @@ from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, List, Optional, Sequence
 
 from wia.features import Doc, extract
-from wia.features.lexicons import BOOSTERS, FIRST_PERSON, HEDGES, get as lex_get
+from wia.features.lexicons import get as lex_get
 from wia.lang import detect_language, function_words
 from wia.text.segment import paragraphs, sentences
-from wia.text.tokens import mean, stdev, words
+from wia.text.tokens import mean, stdev
 
 
 @dataclass

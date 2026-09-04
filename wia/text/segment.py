@@ -54,9 +54,7 @@ def _is_abbreviation(chunk: str) -> bool:
     if re.fullmatch(r"(?:[^\W\d_]\.)+[^\W\d_]", token):
         return True
     # Numeric ordinal / decimal: "3." at the start of a list item, "1.5"
-    if token.isdigit():
-        return True
-    return False
+    return bool(token.isdigit())
 
 
 def sentences(text: str, offset: int = 0) -> List[Segment]:

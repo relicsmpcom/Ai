@@ -12,13 +12,8 @@ from typing import Dict, List, Optional, Sequence
 
 from wia.bench.dataset import Dataset, Sample
 from wia.bench.metrics import EvalResult, evaluate
-from wia.bench.train import CLASS_INDEX, cross_validate, standardize_with
-from wia.detector.calibration import DecisionPolicy, shrink_toward_human
-from wia.detector.model import LinearModel
+from wia.bench.train import cross_validate
 from wia.detector.pipeline import Detector
-from wia.detector.risk import assess, dampen
-from wia.features.doc import Doc
-from wia.features.registry import extract
 from wia.types import AuthorshipClass
 
 COARSE_FROM_LABEL = {

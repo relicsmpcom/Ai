@@ -74,10 +74,7 @@ def detect_language(text: str) -> LanguageGuess:
     if total <= 1e-9:
         return LanguageGuess(Language.UNKNOWN, 0.0, nl, en)
 
-    if nl >= en:
-        lang, share = Language.NL, nl / total
-    else:
-        lang, share = Language.EN, en / total
+    lang = Language.NL if nl >= en else Language.EN
 
     # Confidence blends separation with sample size.
     separation = abs(nl - en) / total

@@ -23,7 +23,7 @@ def apply_locale(text: str, ctx: Context) -> str:
     for source, target in sorted(table.items(), key=lambda kv: -len(kv[0])):
         pattern = re.compile(rf"(?<![\w'’]){re.escape(source)}(?![\w'’])", re.IGNORECASE)
 
-        def sub(m: re.Match) -> str:
+        def sub(m: re.Match, target: str = target) -> str:
             out = target
             if m.group(0)[:1].isupper():
                 out = out[0].upper() + out[1:]

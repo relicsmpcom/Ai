@@ -65,7 +65,7 @@ _CUES: Dict[str, Tuple[Tuple[str, float], ...]] = {
 
 def classify_domain(text: str) -> Tuple[str, float]:
     """Return ``(domain, confidence)``; ``general`` when nothing stands out."""
-    scores = {d: 0.0 for d in DOMAINS}
+    scores = dict.fromkeys(DOMAINS, 0.0)
     lowered = text.lower()
     for domain, cues in _CUES.items():
         for pattern, weight in cues:

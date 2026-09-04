@@ -40,7 +40,12 @@ def run_ops(text: str, ctx: Context, names: Sequence[str]) -> str:
     for operation in chosen:
         try:
             result = operation(text, ctx)
-        except Exception:  # an op must never take the whole rewrite down
+        except Exception as exc:
+            # One broken operation must not lose the whole rewrite — but it
+            # must not disappear either, or a bug here looks like a rewrite
+            # that simply chose not to do anything.
+            ctx.note(f"operation “{operation.name}” failed and was skipped "
+                     f"({type(exc).__name__})")
             continue
         if isinstance(result, str) and result.strip():
             text = result

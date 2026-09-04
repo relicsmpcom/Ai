@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass
-from typing import Any, List, Optional, Protocol, Sequence
+from typing import Any, List, Optional, Protocol
 
 DEFAULT_MODEL = "claude-opus-5"
 

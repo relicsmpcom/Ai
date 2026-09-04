@@ -368,7 +368,7 @@ def digit_rate(d: Doc) -> float:
          1.8, 2.0, direction="human")
 def proper_noun_rate(d: Doc) -> float:
     hits = 0
-    for sw, seg in zip(d.sentence_words, d.sentences):
+    for seg in d.sentences:
         toks = seg.text.split()
         for t in toks[1:]:
             core = t.strip(".,;:!?()\"'“”‘’")
