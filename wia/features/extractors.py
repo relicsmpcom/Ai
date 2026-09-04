@@ -368,7 +368,9 @@ def ellipsis_rate(d: Doc) -> float:
          "Contracted or reduced forms per 100 words.", 1.0, 1.3, direction="human")
 def contraction_rate(d: Doc) -> float:
     if d.language == "nl":
-        n = len(re.findall(r"\b(?:'t|'n|'s\s|zo'n|d'r|m'n|z'n|ff|effe|even)\b", d.lowered))
+        # "even" is an ordinary adverb, not a reduction — counting it made
+        # every polite Dutch email look like a text message.
+        n = len(re.findall(r"\b(?:'t|'n|'s\s|zo'n|d'r|m'n|z'n|ff|effe|'k|'m)\b", d.lowered))
         return d.rate(n)
     return d.rate(len(re.findall(r"\b\w+['’](?:t|s|re|ve|ll|d|m)\b", d.lowered)))
 

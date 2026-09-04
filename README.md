@@ -137,10 +137,10 @@ applying to every figure:
 | --- | --- |
 | False-positive rate (human called AI) | **0.000** |
 | Hard negatives wrongly accused (all 24, out of fold) | **0 / 24** |
-| ROC-AUC (AI vs rest) | 0.905 |
+| ROC-AUC (AI vs rest) | 0.906 |
 | TPR @ 1% FPR | 0.354 |
 | TPR @ 5% FPR | 0.708 |
-| Expected calibration error | 0.148 |
+| Expected calibration error | 0.154 |
 | Answers withheld as uncertain | 0.219 |
 
 The recall is low because the decision policy is deliberately refusing to
@@ -204,7 +204,7 @@ wia/
   api/         FastAPI service
   data/        the seed corpus + its data card
   web/         the single-file UI
-tests/         114 tests
+tests/         117 tests
 docs/          roadmap, roadmap status, architecture, evaluation
 ```
 

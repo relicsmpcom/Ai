@@ -96,3 +96,15 @@ def test_formality_estimate_tracks_register_not_word_length():
         "koffie mee, prima toch?", "nl"))
     assert estimate_formality(formal) >= 5
     assert estimate_formality(casual) <= 2
+
+
+def test_dutch_contraction_feature_ignores_ordinary_adverbs():
+    """"Even" is a plain Dutch adverb, not an informal reduction.
+
+    Counting it made every polite email that said "even bellen" look like a
+    text message, which dragged the formality estimate two levels down.
+    """
+    polite = extract(Doc("Kunnen we hier donderdag even over bellen? Ik hoor het graag.", "nl"))
+    informal = extract(Doc("Kunnen we effe bellen? 't Is niet zo'n groot ding hoor.", "nl"))
+    assert polite["contraction_rate"] == 0.0
+    assert informal["contraction_rate"] > 0.0

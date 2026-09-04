@@ -45,9 +45,9 @@ Samples: **151**
 
 | metric | value |
 | --- | --- |
-| ROC-AUC (AI vs rest) | 0.905 |
+| ROC-AUC (AI vs rest) | 0.906 |
 | Macro F1 | 0.492 |
-| Expected calibration error | 0.148 |
+| Expected calibration error | 0.154 |
 
 ## Per class
 
@@ -71,8 +71,8 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 
 | slice | n | macro F1 | ROC-AUC | FPR | uncertain |
 | --- | --- | --- | --- | --- | --- |
-| en | 76 | 0.498 | 0.906 | 0.000 | 0.237 |
-| nl | 75 | 0.472 | 0.906 | 0.000 | 0.200 |
+| en | 76 | 0.498 | 0.908 | 0.000 | 0.237 |
+| nl | 75 | 0.472 | 0.904 | 0.000 | 0.200 |
 
 ## By length
 
@@ -81,7 +81,7 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 | 100-250 | 10 | 0.345 | 0.833 | 0.000 | 0.100 |
 | 20-50 | 23 | 0.172 | 0.987 | 0.000 | 0.478 |
 | 250-500 | 1 | 0.333 | n/a | 0.000 | 0.000 |
-| 50-100 | 117 | 0.520 | 0.910 | 0.000 | 0.179 |
+| 50-100 | 117 | 0.520 | 0.909 | 0.000 | 0.179 |
 
 ## Confusion (rows = actual)
 
@@ -105,15 +105,15 @@ Samples: **22**
 | Human text called AI *or* mixed | 0.000 |
 | TPR @ 1% FPR | 0.857 |
 | TPR @ 5% FPR | 0.857 |
-| Answers withheld as uncertain | 0.273 |
+| Answers withheld as uncertain | 0.318 |
 
 ## Discrimination and calibration
 
 | metric | value |
 | --- | --- |
 | ROC-AUC (AI vs rest) | 0.990 |
-| Macro F1 | 0.482 |
-| Expected calibration error | 0.263 |
+| Macro F1 | 0.430 |
+| Expected calibration error | 0.382 |
 
 ## Per class
 
@@ -121,7 +121,7 @@ Samples: **22**
 | --- | --- | --- | --- | --- |
 | human | 0.846 | 0.846 | 0.846 | 13 |
 | mixed | 0.000 | 0.000 | 0.000 | 2 |
-| ai | 1.000 | 0.429 | 0.600 | 7 |
+| ai | 1.000 | 0.286 | 0.444 | 7 |
 
 ## Hard negatives
 
@@ -137,7 +137,7 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 | slice | n | macro F1 | ROC-AUC | FPR | uncertain |
 | --- | --- | --- | --- | --- | --- |
 | en | 11 | 0.452 | 1.000 | 0.000 | 0.273 |
-| nl | 11 | 0.500 | 1.000 | 0.000 | 0.273 |
+| nl | 11 | 0.411 | 1.000 | 0.000 | 0.364 |
 
 ## By length
 
@@ -145,7 +145,7 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 | --- | --- | --- | --- | --- | --- |
 | 100-250 | 2 | 0.667 | 1.000 | 0.000 | 0.000 |
 | 20-50 | 3 | 0.167 | n/a | 0.000 | 0.667 |
-| 50-100 | 17 | 0.467 | 0.985 | 0.000 | 0.235 |
+| 50-100 | 17 | 0.395 | 0.985 | 0.000 | 0.294 |
 
 ## By domain
 
@@ -159,7 +159,7 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 | marketing | 2 | 0.000 | n/a | n/a | 0.000 |
 | product_description | 2 | 0.000 | n/a | n/a | 1.000 |
 | report | 4 | 0.667 | 1.000 | 0.000 | 0.000 |
-| school_essay | 2 | 0.333 | n/a | n/a | 0.000 |
+| school_essay | 2 | 0.222 | n/a | n/a | 0.500 |
 | social | 2 | 0.000 | n/a | 0.000 | 1.000 |
 | university | 1 | 0.333 | n/a | 0.000 | 0.000 |
 
@@ -168,7 +168,7 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 | slice | n | macro F1 | ROC-AUC | FPR | uncertain |
 | --- | --- | --- | --- | --- | --- |
 | ai_light_human_edit | 2 | 0.000 | n/a | n/a | 1.000 |
-| fully_ai | 5 | 0.250 | n/a | n/a | 0.400 |
+| fully_ai | 5 | 0.190 | n/a | n/a | 0.600 |
 | fully_human | 13 | 0.306 | n/a | 0.000 | 0.154 |
 | human_heavily_ai_edited | 2 | 0.000 | n/a | n/a | 0.000 |
 
@@ -178,5 +178,5 @@ Human writing chosen because it *looks* generated: non-native writers, legal and
 | --- | --- | --- | --- | --- |
 | human | 11 | 0 | 0 | 2 |
 | mixed | 2 | 0 | 0 | 0 |
-| ai | 0 | 0 | 3 | 4 |
+| ai | 0 | 0 | 2 | 5 |
 | uncertain | 0 | 0 | 0 | 0 |

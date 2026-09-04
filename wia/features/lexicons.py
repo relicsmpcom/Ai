@@ -150,8 +150,8 @@ CASUAL_REGISTER: Dict[str, FrozenSet[str]] = {
         "shout", "chuck", "stuff", "loads of", "a bit", "sorted",
     }),
     "nl": frozenset({
-        "hoi", "hey", "hallo", "joh", "nou", "hoor", "even", "effe", "ff",
-        "gewoon", "gezellig", "leuk", "top", "prima", "doei", "groetjes",
+        "hoi", "hey", "hallo", "joh", "nou", "hoor", "effe", "ff",
+        "gewoon", "gezellig", "top", "doei", "groetjes", "trouwens",
         "sowieso", "best wel", "een beetje", "geen probleem", "laten we",
     }),
 }
