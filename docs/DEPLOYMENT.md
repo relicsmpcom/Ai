@@ -22,10 +22,12 @@ The build is three files plus the engine:
 | `boot.js` | loads Pyodide, unpacks the engine, and replaces the page's HTTP transport with a direct call into Python |
 | `wia-package.zip` | the engine and its data — about 160 KB |
 
-To publish it, enable Pages on the repository (**Settings → Pages → Source:
-GitHub Actions**). The `pages.yml` workflow then builds and deploys on every
-push, but only after the tests pass **and** the detector still holds its
-false-positive rate — a broken model must not reach a public page.
+This repository is already publishing to
+<https://relicsmpcom.github.io/Ai/>. For a fork, enable Pages on the
+repository (**Settings → Pages → Source: GitHub Actions**); the `pages.yml`
+workflow then builds and deploys on every push, but only after the tests pass
+**and** the detector still holds its false-positive rate — a broken model must
+not reach a public page.
 
 ### What this gets you
 

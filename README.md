@@ -2,6 +2,9 @@
 
 **Dutch + English. Detector first, humanizer second.**
 
+**▶ Try it: <https://relicsmpcom.github.io/Ai/>** — runs entirely in your
+browser. Nothing you paste is uploaded anywhere.
+
 An implementation of the platform in [`docs/ROADMAP.md`](docs/ROADMAP.md): a
 system that estimates how a text was likely produced, and improves writing
 without changing what it says.
